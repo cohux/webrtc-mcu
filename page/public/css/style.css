@@ -1,0 +1,441 @@
+header {
+  background-color: #eee;
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+}
+
+.header-left {
+  float: left;
+  height: 50px;
+}
+
+.header-left .header-left-icon {
+  float: left;
+  color: #555;
+  height: 50px;
+}
+
+.header-left .header-left-icon span {
+  font-size: 25px;
+  line-height: 50px;
+  font-weight: bold;
+  color: #555;
+}
+
+.header-left .header-left-menu {
+  float: left;
+  margin-left: 50px;
+}
+
+.header-left .header-left-menu a {
+  color: #555;
+  padding: 0 20px;
+  line-height: 50px;
+  height: 50px;
+  display: block;
+  float: left;
+}
+
+#openMenu {
+  position: relative;
+  float: left;
+  line-height: initial;
+}
+
+#openMenu a {
+  margin-left: 5px;
+  line-height: 20px;
+}
+
+.header-left .header-left-menu a:hover {
+  background-color: #ddd;
+}
+
+.header-left-menu-click {
+  background-color: #ddd;
+}
+
+.header-right {
+  float: right;
+  line-height: 50px;
+}
+
+.header-right a {
+  margin-left: 20px;
+  color: #000;
+}
+
+.header-right a i {
+  color: #999;
+}
+
+.header-right a .fa-sort-down {
+  position: relative;
+  top: -2px;
+}
+
+.header-user-menu {
+  position: absolute;
+  width: 120px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  top: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  z-index: 10;
+}
+
+.header-user-menu p {
+  margin-top: 10px;
+}
+
+.header-user-menu a {
+  text-indent: 10px;
+  display: block;
+  color: #999;
+  margin-top: 10px;
+}
+
+section {
+  margin-top: 30px;
+}
+
+section .section-title {
+  font-weight: bold;
+  color: #999;
+}
+
+section .section-title span {
+  font-size: 17px;
+}
+
+.mall-li {
+  width: 220px;
+  border: 1px solid #ddd;
+  float: left;
+  margin: 14px;
+  position: relative;
+  height: 190px;
+}
+
+.mall-li-image {
+  text-align: center;
+  color: #999;
+  padding: 10px;
+  padding-bottom: 50px;
+}
+
+.mall-li-image p {
+  color: #999;
+}
+
+.mall-li-image span {
+  color: #000;
+  margin-top: 15px;
+  display: block;
+}
+
+.mall-li-image img {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.mall-li-conter {
+  background-color: #eee;
+  padding: 7px;
+  position: absolute;
+  width: 206px;
+  bottom: 0;
+}
+
+.mall-li-conter button {
+  padding: 2px 10px;
+}
+
+.mall-buttton-right {
+  float: right;
+}
+
+.mall-info-title span {
+  color: #999;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.mall-info-text {
+  margin-top: 30px;
+}
+
+.section-docker {
+  margin-top: 20px;
+  position: relative;
+  display: table;
+  width: 100%;
+  margin-bottom: 150px;
+}
+
+.tourl-title {
+  color: #999;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tourl-body {
+  margin-top: 30px;
+}
+
+.tourl-li {
+  margin-bottom: 30px;
+}
+
+.tourl-li p {
+  font-size: 18px;
+  float: left;
+}
+
+.tourl-li a {
+  float: right;
+}
+
+.tourl-li textarea {
+  width: 100%;
+  margin-top: 20px;
+  resize: none;
+  height: 70px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.tourl-li button {
+  font-size: 18px;
+  padding: 10px 30px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  background-color: #eee;
+}
+
+.section-docker-left {
+  float: left;
+  width: 200px;
+}
+
+.section-docker-right {
+  float: left;
+  width: 760px;
+  margin-left: 40px;
+}
+
+.section-docker-left .user-menu {
+  border: 1px solid #ccc;
+  background-color: #eee;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.section-docker-left .user-menu a {
+  display: block;
+  text-indent: 2em;
+  padding: 10px;
+  margin: 20px 0;
+  color: #000;
+  border-radius: 5px;
+}
+
+.user-menu-a-hover {
+  background-color: #ddd;
+}
+
+.user-info-data p {
+  margin-bottom: 20px;
+}
+
+.user-info-data p font {
+  font-weight: bold;
+  width: 8em;
+  float: left;
+}
+
+.user-info-data p input {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 5px; 
+}
+
+.user-info-data p span {
+  color: #999;
+}
+
+.user-info-data p button {
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  margin-left: 30px;
+  color: blue;
+}
+
+.user-info-data-title {
+  margin-bottom: 20px;
+}
+
+.user-info-data-title p {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.user-info-data button {
+  background-color: #0c9cf8;
+  color: #fff;
+  border: 0;
+  padding: 6px 20px;
+}
+
+.row {
+  margin-bottom: 20px;
+  display:table;
+  width: 100%;
+}
+
+.row span {
+  float: left;
+  font-weight: bold;
+}
+
+.timeSpride {
+  float: left;
+  border: 1px solid #ddd;
+  border-right: 0;
+  border-radius: 3px;
+}
+
+.timeSpride button {
+  border: 0;
+  border-right: 1px solid #ddd;
+  background-color: #fff;
+  color: #999;
+  padding: 3px 5px;
+}
+
+.mallSpride select {
+  padding: 3px 5px;
+  border: 1px solid #ddd;
+}
+
+.withsingle-tab {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-right: 0;
+  display: table;
+}
+
+.withsingle-td {
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  float: left;
+}
+
+.withsingle-td span {
+  font-weight: 500;
+  color: #999;
+  font-size: 12px;
+}
+
+.withsingle-td span a {
+  font-size: 12px;
+}
+
+.page-tab button, .page-tab input {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  height: 30px;
+  width: 40px;
+  text-align: center;
+}
+
+.in-tab {
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  display: table;
+  width: 100%;
+}
+
+.in-tab button {
+  float: left;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd; 
+  padding: 10px 15px;
+  margin: 0;
+  position: relative;
+  top: 1px;
+}
+
+#in-tab-on {
+  border-top: 2px solid #0c9cf8;
+  border-bottom: 1px solid #fff;
+}
+
+.info-body {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  padding: 15px;
+  display: flex;
+}
+
+.info-body span {
+  display: block;
+  float: left;
+  font-weight: initial;
+  font-size: 13px;
+  color:#666666;
+}
+
+.bottom {
+  border-top: 1px solid #ccc;
+  margin-top: 40px;
+  display: table;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.bottom-info-tab {
+  float: left;
+}
+
+.bottom-info {
+  padding-top: 15px;
+  padding-bottom: 50px;
+}
+
+.bottom-info-tab p {
+  line-height: 33px;
+  margin-left: 2em;
+  font-size: 12px;
+  color: #666;
+}
+
+.bottom-info-tab img {
+  width: 100px;
+}
+
+.section-info {
+  background-color: #eee;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.section-info * {
+  font-size: 13px;
+  line-height: 25px;
+  color: #666;
+}
+
+.section-info span {
+  display: block;
+}
+
+.section-info p {
+  padding-left: 2em;
+}

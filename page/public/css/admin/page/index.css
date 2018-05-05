@@ -1,0 +1,98 @@
+body, #vue-docker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.news {
+  padding: 30px;
+  position: relative;
+}
+
+.add-news {
+  position: relative;
+  height: 40px;
+}
+
+.add-news input {
+  float: left;
+  height: 40px;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  background-color: rgba(0,0,0,0);
+  width: 20%;
+  margin-right: 5%;
+}
+
+.add-news button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  background-color: #0c9cf8;
+  color: #fff;
+  padding: 10px;
+}
+
+.news-list {
+  margin-top: 30px;
+}
+
+.news-list .news-ul {
+  display: flex;
+}
+
+.news-list .news-ul .news-li {
+  float: left;
+}
+
+
+.news-ul-top .news-li, .news-ul-list .news-li {
+  padding: 10px;
+}
+
+.news-li button {
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  color: #999;
+}
+
+.news-ul-list {
+  color: #999;
+  border-top: 1px solid #ddd;
+}
+
+.news-ul-list .news-li p {
+  color: #555;
+}
+
+.news-not-ul {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+#news-trash {
+  margin-left: 2em;
+}
+
+.page-tab {
+  margin-top: 30px;
+  position: relative;
+}
+
+.page-tab button {
+  padding: 10px;
+  border: 0;
+  border-right: 1px solid #ddd;
+  background-color: rgba(0,0,0,0);
+  color: #999;
+}
+
+#page-end {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-left: 1px solid #ddd;
+}

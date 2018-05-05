@@ -1,0 +1,221 @@
+body, #vue-docker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.docker {
+  padding: 30px;
+  position: relative;
+}
+
+.news-conter {
+  position: relative;
+  padding: 10px;
+}
+
+.news-conter-filter {
+  display: flex;
+  color: #999;
+}
+
+.news-conter-filter .news-conter-filter-li {
+  float: left;
+  margin-right: 20px;
+}
+
+.news-conter-filter .news-conter-filter-li select {
+  height: 25px;
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+.news-conter-filter .news-conter-filter-li input {
+  height: 23px;
+  width: 100px;
+  border: 1px solid #ddd;
+  color: #555;
+  text-align: center;
+}
+
+.news-conter-add {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.news-conter-add button {
+  height: 25px;
+  padding: 0 10px;
+  background-color: #383838;
+  color: #fff;
+  border: 0;
+  box-shadow: 0 0 1px 1px #ddd;
+}
+
+.list-top {
+  margin-top: 20px;
+}
+
+.list-li {
+  display: flex;
+  line-height: 40px; 
+}
+
+.maxList {
+  border-top: 1px solid #ddd;
+  color: #999;
+}
+
+.list-li {
+  float: left;
+  height: 40px;
+  text-indent: 2em;
+}
+
+.list-li .li-time {
+  width: 15%;
+  border-right: 1px solid #ddd; 
+}
+
+.list-li .li-title {
+  width: 35%;
+  border-right: 1px solid #ddd; 
+}
+
+.list-li .li-type {
+  width: 15%;
+  border-right: 1px solid #ddd; 
+}
+
+.list-li .li-conter {
+  width: 20%;
+}
+
+.list-li .li-money {
+  width: 15%;
+  border-right: 1px solid #ddd; 
+}
+
+.page-tab {
+  margin-top: 20px;
+  height: 40px;
+  display: flex;
+  position: relative;
+}
+
+.page-tab button {
+  float: left;
+  border: 0;
+  height: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+}
+
+#page-end {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-right: 0;
+  border-left: 1px solid #ddd;
+}
+
+.add-data {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px;
+  background-color: #00b150;
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 5px 2px #555;
+  z-index: 100;
+}
+
+.list-li button {
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  margin-right: 30px;
+}
+
+#edit {
+  color: #999;
+}
+
+#trash {
+  color: #999;
+}
+
+.add-view {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-color: #eee;
+  opacity: 0;
+}
+
+.add-data {
+  position: relative;
+}
+
+.add-data button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 25px;
+  padding: 0 15px;
+  border: 0;
+  background-color: #000;
+  color: #fff;
+}
+
+.add-data #addDataImages {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 25px;
+  opacity: 0;
+  z-index: 100;
+}
+
+.add-body {
+  margin: 30px;
+}
+
+.add-title, .add-data {
+  padding: 10px;
+}
+
+.add-data, .add-text {
+  margin-top: 20px;
+}
+
+.add-title input {
+  height: 23px;
+  width: 100%;
+  border: 1px solid #ddd;
+  text-indent: 10px;;
+}
+
+.add-data input {
+  height: 23px;
+  width: 200px;
+  border: 1px solid #ddd;
+  text-indent: 10px;
+  margin-right: 20px;
+}
+
+#close-news {
+  right: 120px;
+  background-color: #f00222;
+}

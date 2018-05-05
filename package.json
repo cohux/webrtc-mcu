@@ -1,0 +1,46 @@
+{
+    "name": "webrtc-mcu",
+    "version": "0.0.1",
+    "description": "INTEL WebRTC MCU 集群管理服务",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "main": "./",
+    "dependencies": {
+        "arguments.type": "^1.0.5",
+        "body-parser": "^1.18.2",
+        "cookie-parser": "^1.4.3",
+        "cookie-session": "^2.0.0-beta.3",
+        "ejs": "^2.5.8",
+        "express": "^4.16.3",
+        "mongodb": "^3.0.5",
+        "nodemailer": "^4.6.4",
+        "redis": "^2.8.0",
+        "toml": "^2.3.3"
+    },
+    "devDependencies": {},
+    "keywords": [
+        "intel",
+        "webrtc",
+        "nodejs",
+        "javascript"
+    ],
+    "author": {
+        "name": "Mr.Panda",
+        "email": "xivistudios@gmail.com",
+        "url": "https://github.com/xivistudios"
+    },
+    "engines": {
+        "node": ">=8.1"
+    },
+    "homepage": "https://github.com/xivistudios/webrtc-mcu",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/xivistudios/webrtc-mcu.git"
+    },
+    "bugs": {
+        "url": "https://github.com/xivistudios/webrtc-mcu",
+        "email": "xivistudios@gmail.com"
+    },
+    "license": "MIT"
+}
