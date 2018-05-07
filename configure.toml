@@ -8,7 +8,8 @@
 host = "localhost"
 port = 80
 origin = "http://localhost"
-view = "/page/html"
+views = "E://Package/webrtc-mcu/page/html"
+public = "E://Package/webrtc-mcu/page/public"
 
 # http session 配置
 [session]
@@ -22,10 +23,10 @@ keys = [
 # mongodb数据库连接配置
 [mongodb]
 path = "mongodb://192.168.126.128:27017"
-dbname = "WebRTCMCU"
+dbname = "intelmcu"
 document = [
-  "user",
-  "auth",
+  "admin",
+  "event",
   "log"
 ]
 

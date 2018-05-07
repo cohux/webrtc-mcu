@@ -1,39 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh">
-  <head>
-    <title>INTEL WEBRTC MCU | 登录</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/public/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/public/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <link href="/public/gentelella/vendors/animate.css/animate.min.css" rel="stylesheet">
-    <link href="/public/gentelella/build/css/custom.min.css" rel="stylesheet">
-    <script src="/public/js/bin/axios.js"></script>
-  </head>
-  <body class="login">
-    <div>
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-            <h1>登录 INTEL WEBRTC MCU</h1>
-            <input type="text" class="form-control" placeholder="用户名" name="Name" id="Name" style="margin-bottom: 10px" />
-            <input type="password" class="form-control" placeholder="密码" name="PassWord" id="PassWord" style="margin-bottom: 10px" />
-            <button type="submit" class="btn btn-default submit" id="login">登录</button>
-            <div class="clearfix"></div>
-          </section>
-        </div>
+<html>
+
+<head>
+  <title>INTEL WEBRTC MCU | 登录</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {margin:0;font-family:arial,sans-serif,Consolas,Courier New,Courier,monospace,"Microsoft YaHei UI","Microsoft YaHei",微软雅黑;font-size:13px;}
+    input,button,select,textarea {outline:none;}
+    body {overflow-x:hidden;}
+    #docker {width:100%;position:fixed;height:100%;top:0;left:0;}
+    a {text-decoration:none;}
+    a:hover {text-decoration:none;}
+    .click-on,button:hover {cursor:pointer;}
+    #background {position:absolute;width:100%;height:100%;top:0;left:0;z-index:-1;background-image:url(/public/images/login.jpg);background-size:cover;background-position:50%;}
+    .Login {width:300px;margin:0 auto;margin-top:30vh;}
+    .Login-title {text-align:center;text-transform:uppercase;font-size:1.2em;color:#fff;}
+    .Login-of-Sogin {margin-top:60px;}
+    .Login-of-Sogin button {border:0;background-color:rgba(0,0,0,0);line-height:2em;margin-right:10px;}
+    .Login-input {margin-top:20px;border-top:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #ddd;border-radius:5px;}
+    .Login-input input {line-height:3.5em;border:0;border-bottom:1px solid #ddd;width:100%;text-indent:10px;border-radius: 5px;}
+    .Login-input-top {border-radius:5px 5px 0 0;}
+    .Login-input-bottom {border-radius:0 0 5px 5px;}
+    .Login-sogin-on {margin-top:20px;}
+    .Login-sogin-on button {border:0;width:100%;height:40px;background-color:rgb(13,98,224);color:#fff;border-radius:5px;}
+    .Login-sogin-on button:hover {background-color:#f00222;}
+    .tab-on {color:#f00222;border-bottom:1px solid #f00222;}
+  </style>
+  <script src="/public/js/bin/axios.js"></script>
+</head>
+
+<body>
+  <div id="docker">
+    <div id="background"></div>
+    <div class="Login" data-type="login">
+      <div class="Login-title">INTEL WEBRTC MCU</div>
+      <div class="Login-of-Sogin">
+        <button class="tab-on">登录</button>
+      </div>
+      <div class="Login-input">
+        <input type="text" class="Login-input-top" placeholder="用户名" id="Name">
+        <input type="password" class="Login-input-hide" placeholder="密码" id="PassWord">
+      </div>
+      <div class="Login-sogin-on">
+        <button type="submit" id="login">登录</button>
       </div>
     </div>
-  </body>
+  </div>
   <script>
     window.onload = function () {
       document.getElementById("login").onclick = function () {
         axios.post("/auth/login", {
-          Name: document.getElementById("Name").value,
-          PassWord: document.getElementById("PassWord").value
+          username: document.getElementById("Name").value,
+          password: document.getElementById("PassWord").value
         }).then(function (r) {
           if (r.status === 200 && r.data.Status === 200) {
             location.href = "/view/console"
@@ -44,4 +65,6 @@
       }
     }
   </script>
+</body>
+
 </html>

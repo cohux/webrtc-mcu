@@ -85,7 +85,7 @@ class middleware {
      * @private
      */
     res.view = function (html) {
-      res.sendFile(path.join(dirname, configure.http.view, html))
+      res.sendFile(path.join(configure.http.views, html))
     }
 
     /**
@@ -98,7 +98,7 @@ class middleware {
       let data = await dbService.RedisClient.Get(views)
       assert.equal(data !== undefined, true)
       let user = JSON.parse(data)
-      assert.equal(user["id"], views)
+      assert.equal(user["username"], views)
       req.userData = user
       req.userLogin = true
     } catch (error) {

@@ -27,6 +27,7 @@ const include = require("./include")
 const middleware = require("./middleware")
 const dbService = require("./dbService")
 const server = http.createServer(app)
+const websocket = require("socket.io")(server)
 const middlewares = new middleware(include, dbService, configure, __dirname)
 
 
@@ -39,7 +40,7 @@ app.use(cookieSession(configure.session))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.set("views", `${__dirname}/page/html`)
+app.set("views", configure.http.views)
 app.set("view engine", "html")
 app.engine(".html", ejs.__express)
 
@@ -48,7 +49,7 @@ app.engine(".html", ejs.__express)
  * 路由模块
  * @private
  */
-app.use("/public", express.static(`${__dirname}/page/public`))
+app.use("/public", express.static(configure.http.public))
 app.use(/^((?!\.).)*$/, middlewares.filter)
 app.use("/", require("./router/root"))
 

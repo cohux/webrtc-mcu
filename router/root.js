@@ -1,6 +1,6 @@
 /*!
- * 分众快讯 (fenzhongkuaixun)
- * git https://github.com/xivistudios/fenzhongkuaixun
+ * WebRTC-MCU
+ * git https://github.com/xivistudios/webrtc-mcu
  * Copyright(c) 2018-2023 Mr.Panda xivistudios
  * MIT Licensed
  */
@@ -18,6 +18,7 @@
 /**
  * Module dependencies.
  */
+const assert = require("assert")
 const express = require("express")
 const router = express.Router()
 
