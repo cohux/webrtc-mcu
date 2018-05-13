@@ -1,70 +1,60 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-  <title>INTEL WEBRTC MCU | 登录</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    * {margin:0;font-family:arial,sans-serif,Consolas,Courier New,Courier,monospace,"Microsoft YaHei UI","Microsoft YaHei",微软雅黑;font-size:13px;}
-    input,button,select,textarea {outline:none;}
-    body {overflow-x:hidden;}
-    #docker {width:100%;position:fixed;height:100%;top:0;left:0;}
-    a {text-decoration:none;}
-    a:hover {text-decoration:none;}
-    .click-on,button:hover {cursor:pointer;}
-    #background {position:absolute;width:100%;height:100%;top:0;left:0;z-index:-1;background-image:url(/public/images/login.jpg);background-size:cover;background-position:50%;}
-    .Login {width:300px;margin:0 auto;margin-top:30vh;}
-    .Login-title {text-align:center;text-transform:uppercase;font-size:1.2em;color:#fff;}
-    .Login-of-Sogin {margin-top:60px;}
-    .Login-of-Sogin button {border:0;background-color:rgba(0,0,0,0);line-height:2em;margin-right:10px;}
-    .Login-input {margin-top:20px;border-top:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #ddd;border-radius:5px;}
-    .Login-input input {line-height:3.5em;border:0;border-bottom:1px solid #ddd;width:100%;text-indent:10px;border-radius: 5px;}
-    .Login-input-top {border-radius:5px 5px 0 0;}
-    .Login-input-bottom {border-radius:0 0 5px 5px;}
-    .Login-sogin-on {margin-top:20px;}
-    .Login-sogin-on button {border:0;width:100%;height:40px;background-color:rgb(13,98,224);color:#fff;border-radius:5px;}
-    .Login-sogin-on button:hover {background-color:#f00222;}
-    .tab-on {color:#f00222;border-bottom:1px solid #f00222;}
-  </style>
-  <script src="/public/js/bin/axios.js"></script>
-</head>
-
-<body>
-  <div id="docker">
-    <div id="background"></div>
-    <div class="Login" data-type="login">
-      <div class="Login-title">INTEL WEBRTC MCU</div>
-      <div class="Login-of-Sogin">
-        <button class="tab-on">登录</button>
-      </div>
-      <div class="Login-input">
-        <input type="text" class="Login-input-top" placeholder="用户名" id="Name">
-        <input type="password" class="Login-input-hide" placeholder="密码" id="PassWord">
-      </div>
-      <div class="Login-sogin-on">
-        <button type="submit" id="login">登录</button>
-      </div>
+<html lang="zh">
+  <head>
+    <title>管理后台 - 登录注册</title>
+    <meta charset="UTF-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- 
+      Module dependencies. 
+    -->
+    <link href="/public/images/favicon.png" mce_href="favicon.ico" rel="icon" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap-vue.css"/>
+    <link rel="stylesheet" href="/public/css/lib/fontawesome.css">
+    <link rel="stylesheet" href="/public/css/lib/animate.css"/>
+    <link rel="stylesheet" href="/public/css/lib/loaders.css"/>
+    <link rel="stylesheet" href="/public/css/gload.css"/>
+    <script src="/public/js/bin/gload.js"></script>
+    <script src="/public/js/bin/axios.js"></script>
+    <script src="/public/js/bin/vue.js"></script>
+    <script src="/public/js/bin/polyfill.min.js"></script>
+    <script src="/public/js/bin/bootstrap-vue.js"></script>
+    <script src="/public/js/bin/socket.io.js"></script>
+    <!-- 
+      Use dependencies. 
+    -->
+    <script src="/public/js/login.js"></script>
+    <link rel="stylesheet" href="/public/css/login.css"/>
+  </head>
+  <body>
+    <!-- 
+      vue容器. 
+    -->
+    <div id="vue-docker">
+      
+      <!-- 
+        登录. 
+      -->
+      <section class="shadow">
+        <div class="login">
+          <h4>
+            <img src="/public/images/favicon.png" />
+            <span>Manage</span>
+          </h4>
+          <div class="block" v-show="block">
+            <i class="fas fa-arrow-left mhover" v-on:click="blockUserName"></i>
+            <span>{{ username }}</span>
+          </div>
+          <h3>{{ type }}</h3>
+          <input v-bind:type="inputType" v-bind:placeholder="inputPlaceholder" v-model="input" v-on:keydown="keys" autofocus />
+          <button v-on:click="next">{{ button }}</button>
+          <div class="info">
+            <span>© 2018 Intel WebRTC MCU Manage . Mr.Panda</span>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-  <script>
-    window.onload = function () {
-      document.getElementById("login").onclick = function () {
-        axios.post("/auth/login", {
-          username: document.getElementById("Name").value,
-          password: document.getElementById("PassWord").value
-        }).then(function (r) {
-          if (r.status === 200 && r.data.Status === 200) {
-            location.href = "/view/console"
-          } else {
-            alert(r.data.Error)
-          }
-        })
-      }
-    }
-  </script>
-</body>
-
+  </body>
 </html>

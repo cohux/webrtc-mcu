@@ -20,6 +20,7 @@
  */
 const assert = require("assert")
 const express = require("express")
+const path = require("path")
 const router = express.Router()
 
 
@@ -28,28 +29,8 @@ const router = express.Router()
  * @private
  */
 router.get("/", async function (req, res) {
-  try {
-    assert.equal(req.userLogin, true)
-    res.redirect("/view/console")
-  } catch (error) {
-    res.redirect("/view/login")
-  }
+  res.redirect(req.userLogin === true ? "/view/console" : "/view/login")
 })
-
-
-/**
- * 视图路由
- * @private
- */
-router.use("/view", require("./view"))
-
-
-/**
- * 认证路由
- * @private
- */
-router.use("/auth", require("./auth"))
-
 
 
 // 暴露出路由

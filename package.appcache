@@ -1,0 +1,10 @@
+CACHE MANIFEST:
+/public/css/lib
+/public/js/bin
+
+NETWORK:
+/view
+/auth
+*
+
+FALLBACK:

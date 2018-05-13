@@ -49,9 +49,12 @@ app.engine(".html", ejs.__express)
  * 路由模块
  * @private
  */
+//app.use("/package.appcache", express.static("./package.appcache"))
 app.use("/public", express.static(configure.http.public))
 app.use(/^((?!\.).)*$/, middlewares.filter)
 app.use("/", require("./router/root"))
+app.use("/view", require("./router/view"))
+app.use("/auth", require("./router/auth"))
 
 
 /*!

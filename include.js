@@ -26,10 +26,10 @@ const childProcess = require("child_process")
  * Date转字符串
  * @private
  */
-function DateInt (Init, split = "-") {
-  let Data = parseInt(Init)
-  let UMT = new Date(1E3 * Data)
-  return UMT.getFullYear() + split + (UMT.getMonth() +1) + split + UMT.getDate()
+exports.DateInt = function (init, split = "-") {
+  let data = parseInt(init), 
+      umt = new Date(1E3 * data)
+  return umt.getFullYear() + split + (umt.getMonth() +1) + split + umt.getDate()
 }
 
 
@@ -37,7 +37,7 @@ function DateInt (Init, split = "-") {
  * MD5计算
  * @private
  */
-function md5 (str) {
+exports.md5 = function (str) {
   try {
     assert.equal(typeof str, "string")
     return crypto.createHash("md5").update(str).digest("hex")
@@ -51,17 +51,17 @@ function md5 (str) {
  * 获取标准格式时间
  * @private
  */
-function TimeString (now, data) {
-  let Year = now.getFullYear()
-  let Month = now.getMonth() + 1
-  let Data = data ? data : now.getDate()
-  if (Month < 10) {
-    Month = "0" + Month.toString()
+exports.TimeString = function (now, da) {
+  let year = now.getFullYear(), 
+      month = now.getMonth() + 1,
+      data = da ? da : now.getDate()
+  if (month < 10) {
+    month = "0" + month.toString()
   }
-  if (Data < 10) {
-    Data = "0" + Data.toString()
+  if (data < 10) {
+    data = "0" + data.toString()
   }
-  return `${Year}-${Month}-${Data}`
+  return `${year}-${month}-${data}`
 }
 
 
@@ -69,20 +69,18 @@ function TimeString (now, data) {
  * 对比时间
  * @private
  */
-function ifTime (a, b) {
-  assert.deepEqual(typeof a, "string")
-  assert.deepEqual(typeof b, "string")
-  let atime = new Date(a)
-  let btime = new Date(b)
-  let aUTC = atime.getTime()
-  let bUTC = btime.getTime()
-  if (aUTC > bUTC) {
+exports.ifTime = function (a, b) {
+  let atime = new Date(a),
+      btime = new Date(b),
+      autc = atime.getTime(),
+      butc = btime.getTime()
+  if (autc > butc) {
     return 1
   } else 
-  if (aUTC < bUTC) {
+  if (autc < butc) {
     return -1
   } else 
-  if (aUTC == bUTC) {
+  if (autc == butc) {
     return 0
   }
 }
@@ -92,18 +90,18 @@ function ifTime (a, b) {
  * 日期加减换算
  * @private
  */
-function AddDate (date, days) { 
-  let D = new Date(date)
-  D.setDate(D.getDate() + days)
-  let Month = D.getMonth() + 1
-  let Data = D.getDate()
-  if (Month < 10) {
-    Month = "0" + Month.toString()
+exports.AddDate = function (date, days) { 
+  let d = new Date(date)
+  d.setDate(d.getDate() + days)
+  let month = d.getMonth() + 1,
+      data = d.getDate()
+  if (month < 10) {
+    month = "0" + month.toString()
   }
-  if (Data < 10) {
-    Data = "0" + Data.toString()
+  if (data < 10) {
+    data = "0" + data.toString()
   }
-  return `${D.getFullYear()}-${Month}-${Data}`
+  return `${d.getFullYear()}-${month}-${data}`
 }
 
 
@@ -111,7 +109,7 @@ function AddDate (date, days) {
  * 字符串限定
  * @private
  */
-function StrLimit (str, limit) {
+exports.StrLimit = function (str, limit) {
   if (str.length > limit) {
     return `${str.substring(0, limit - 3)}...`
   } else {
@@ -124,7 +122,7 @@ function StrLimit (str, limit) {
  * 加密
  * @private 
  */
-function Decrypt (keyString) {
+exports.Decrypt = function (keyString) {
   return new Promise((resolve, reject) => {
     try {
       assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
@@ -144,7 +142,7 @@ function Decrypt (keyString) {
  * 解密
  * @private
  */
-function Encrypt (keyString) {
+exports.Encrypt = function (keyString) {
   return new Promise((resolve, reject) => {
     try {
       assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
@@ -164,25 +162,11 @@ function Encrypt (keyString) {
  * 多精度浮点
  * @private
  */
-function initMath (number, length) {
+exports.initMath = function (number, length) {
   let numberstr = (String(number)).split(".")
   if (numberstr.length === 1) {
     return number
   } else {
     return Number(`${numberstr[0]}.${numberstr[1].slice(0, length)}`)
   }
-}
-
-
-// 导出模块
-module.exports = {
-  Decrypt,
-  Encrypt,
-  TimeString,
-  StrLimit,
-  AddDate,
-  DateInt,
-  ifTime,
-  md5,
-  initMath
 }

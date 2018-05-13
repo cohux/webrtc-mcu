@@ -22,22 +22,23 @@ keys = [
 
 # mongodb数据库连接配置
 [mongodb]
-path = "mongodb://192.168.126.128:27017"
-dbname = "intelmcu"
+path = "mongodb://106.15.66.51:27017"
+dbname = "console"
 document = [
   "admin",
   "event",
-  "log"
+  "log",
+  "system"
 ]
 
 # mongodb数据库认证配置
 [mongodb.auth]
-user = "Adminstrators"
+user = "panda"
 password = "xiaopange520"
 
 # redis数据库连接配置
 [redis]
-host = "192.168.126.128"
+host = "106.15.66.51"
 port = 6379
 
 # 加密配置
@@ -57,3 +58,10 @@ secure = true
 [nodemailer.auth]
 user = "duozan55@163.com"
 pass = "duozhuan886688"
+
+# mcu服务id
+[mcu.service]
+superServiceId = "5af67653f7ea137358023ec6"
+superServiceKey = "65sUUxO/VNbqmnyOy21vYDCZDDFwxsHOXCitou8xs5EqSJLbE0HQmwaVX5dM2psENArqknBU2erbFW4d7AH7UzQ2VO+jzbD2+GmXy2YWnZA6kz7tMpl+V9pCzI72fUyNZoQrLa0dOCi3HtaLTqnQo2t9FB5cjaLT3UVNdmXDTz8="
+sampleServiceId = "5af67654f7ea137358023ec7"
+sampleServiceKey = "kQI3boVIWe7cU7yRtK4GCsZbZ93afGQxmtRyH5CHH8EizhLs7eL83cnu1QL+FbLZYERaco2Z4TyXqT/ID0WE2txi6Ukc5CKOOWr16LXJzCmuvc5jAeIBwrBzWTprZG5CtQZ+tKm7IbAvVHaP1167Kl+SGfgAEl+8Rw5dUKsNzxo="

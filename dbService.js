@@ -32,11 +32,7 @@ let RedisClient = redis.createClient(configure.redis)
  * 连接到mongodb
  * @private
  */
-MongoClient.connect(configure.mongodb.path, { auth: configure.mongodb.auth }, function (error, Mongo) {
-  if (error) {
-    console.error("MongoDB初始化失败", error)
-    return
-  }
+MongoClient.connect(configure.mongodb.path, function (error, Mongo) {
   for (let v of configure.mongodb.document) {
     MongoDBClient[v] = Mongo.db(configure.mongodb.dbname).collection(v)
   }
@@ -48,7 +44,9 @@ MongoClient.connect(configure.mongodb.path, { auth: configure.mongodb.auth }, fu
  * 触发错误
  */
 RedisClient.on("error", function (error) {
-  console.error("Redis初始化失败", error)
+  setTimeout(function () {
+    RedisClient = redis.createClient(configure.redis)
+  }, 2000)
 })
 
 

@@ -50,6 +50,24 @@ router.post("/login", async function (req, res) {
 })
 
 
+/**
+ * 验证用户是否存在
+ * @private
+ */
+router.post("/verificationUserName", async function (req, res) {
+  try {
+    let { username } = req.body
+    assert.deepEqual(typeof username === "string", true, "参数错误")
+    assert.deepEqual(username.length >= 4, true, "参数错误")
+    let Data = await req.mongodb.admin.findOne({ username })
+    assert.deepEqual(Data !== null && Data !== undefined, true, "用户不存在")
+    res.send({ Status: 200 })
+  } catch (error) {
+    res.send({ Status: 404, Error: error.message })
+  }
+})
+
+
 
 // 暴露出路由
 module.exports = router
