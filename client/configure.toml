@@ -5,4 +5,4 @@
 
 # websocket配置
 [websocket]
-host = "ws://localhost:88"
+host = "ws://localhost/masterApi"
