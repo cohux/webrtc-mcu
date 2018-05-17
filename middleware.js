@@ -113,7 +113,7 @@ class middleware {
      */
     try {
       let { views } = req.session
-      assert.equal(views !== undefined && isNaN(views), true)
+      assert.equal(views !== undefined && views !== null, true)
       let data = await dbService.RedisClient.Get(views)
       assert.equal(data !== undefined, true)
       let user = JSON.parse(data)

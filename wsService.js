@@ -170,11 +170,11 @@ class wsService {
         let {
           password, username
         } = querystring.parse(headers.cookie, "; ", "=")
-        assert.deepEqual(isNaN(password) && password !== undefined, true, "连接没有token")
-        assert.deepEqual(isNaN(username) && username !== undefined, true, "连接没有token")
+        assert.deepEqual(password !== null && password !== undefined, true, "连接没有token")
+        assert.deepEqual(username !== null && username !== undefined, true, "连接没有token")
         let user = await this.dbService.RedisClient.Get(String(username))
         user = JSON.parse(user)
-        assert.deepEqual(isNaN(user) && user !== undefined, true, "没有找到用户")
+        assert.deepEqual(user !== null && user !== undefined, true, "没有找到用户")
         assert.deepEqual(username === user.username && password === user.DecryptKey, true, "未通过鉴权")
         callback({
           type: "web",
@@ -191,7 +191,7 @@ class wsService {
          * @private
          */
         let cluster = await this.dbService.MongoDBClient.cluster.findOne({ remoteAddress })
-        assert.deepEqual(isNaN(cluster) && cluster !== undefined, true, "未通过鉴权")
+        assert.deepEqual(cluster !== null && cluster !== undefined, true, "未通过鉴权")
         callback({
           type: "cluster",
           token: cluster,

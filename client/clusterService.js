@@ -56,12 +56,12 @@ function cmdParce(stdout, type, fn) {
     for (var i = 0; i < NodeNav.length; i ++) {
       var Value = NodeNav[i]
       var NumberValue = Number(Value)
-      Value.length > 0 && !isNaN(NumberValue) && NodeDataMap.push(NumberValue)
+      Value.length > 0 && NumberValue !== null && NodeDataMap.push(NumberValue)
       if (i === NodeNav.length - 1) {
         for (var i = 0; i < DomainNav.length; i ++) {
           var Value = DomainNav[i]
           var NumberValue = Number(Value)
-          Value.length > 0 && !isNaN(NumberValue) && DomainDataMap.push(NumberValue)
+          Value.length > 0 && NumberValue !== null && DomainDataMap.push(NumberValue)
           if (i === DomainNav.length - 1) {
             NetWork.Node.name = nav[0]
             NetWork.Node.Receive = NodeDataMap[0]
@@ -84,7 +84,7 @@ function cmdParce(stdout, type, fn) {
     for (var i = 0; i < NET.length; i ++) {
       var Value = NET[i]
       var LISTENParey = []
-      if (! isNaN(Value.match(/LISTEN/g))) {
+      if (Value.match(/LISTEN/g) !== null) {
         for (var v = 0, x = Value.split(" "); v < x.length; v ++) {
           x[v] !== "" && x[v] !== "\n" && LISTENParey.push(x[v])
         }
@@ -138,7 +138,7 @@ function NetWorkInfoPro(type, callback) {
  * @method GetNetWork
  * @param {fn<callback>}
  */
-function GetNetWork(fn) {
+function GetNetWork(portList, fn) {
   NetWorkInfoPro("net", function (error, NetWorkOne) {
     if (! error) {
       setTimeout(function () {
@@ -173,7 +173,7 @@ function GetNetWork(fn) {
                   Receive: DomainReceive,
                   Transmit: DomainTransmit
                 },
-                NetListPort: NetListPort
+                NetListPort: new Set(NetListPort)
               })
             })
           }
