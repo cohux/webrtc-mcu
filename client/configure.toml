@@ -5,4 +5,4 @@
 
 # websocket配置
 [websocket]
-host = "ws://39.104.116.0:88"
+host = "ws://localhost:88"

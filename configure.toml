@@ -5,11 +5,11 @@
 
 # http配置
 [http]
-host = "localhost"
+host = "qxrtc.qixun.tv"
 port = 80
-origin = "http://localhost"
-views = "E://Package/webrtc-mcu/page/html"
-public = "E://Package/webrtc-mcu/page/public"
+origin = "http://qxrtc.qixun.tv"
+views = "root/package/webrtc-mcu/page/html"
+public = "root/package/webrtc-mcu/page/public"
 
 # http session 配置
 [session]
@@ -22,7 +22,7 @@ keys = [
 
 # mongodb数据库连接配置
 [mongodb]
-host = "106.15.66.51"
+host = "0.0.0.0"
 port = 27017
 dbname = "console"
 document = [
@@ -39,7 +39,7 @@ password = "xiaopange520"
 
 # redis数据库连接配置
 [redis]
-host = "106.15.66.51"
+host = "0.0.0.0"
 port = 6379
 
 # 加密配置
@@ -67,7 +67,7 @@ router = "/masterApi"
 
 # 日志配置
 [log]
-path = "E://Package/webrtc-mcu/mcu.log"
+path = "root/package/webrtc-mcu/mcu.log"
 
 # mcu服务id
 [mcu]

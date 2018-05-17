@@ -55,9 +55,11 @@ class wsService {
    * @private
    */
   static send (socket, data) {
-    socket.send(JSON.stringify(data), function (error) {
+    try {
+      socket.send(JSON.stringify(data))
+    } catch (error) {
       return
-    })
+    }
   }
   
   /**
@@ -73,6 +75,7 @@ class wsService {
         remotePort
       } = socket._socket
       let parms = JSON.parse(message)
+      assert.deepEqual("event" in parms && "message" in parms, true, "数据不符合标准")
       
       /**
        * 节点.
@@ -80,6 +83,15 @@ class wsService {
        */
       if (auth.type === "cluster") {
         
+        /**
+         * 推送节点信息.
+         * @private
+         */
+        if (parms.event === "systemInfo") {
+          await this.dbService.RedisClient.set("systemInfo", JSON.stringify(parms.message))
+        } else {
+          return
+        }
       } else
         
       /**
@@ -93,7 +105,8 @@ class wsService {
          * @private
          */
         if (parms.event === "systemInfo") {
-          let systemInfo = await this.dbService.redis.Get("systemInfo")
+          let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
+          assert.deepEqual(systemInfo !== null && systemInfo !== undefined, true, "无法获取系统数据")
           wsService.send(socket, {
             event: "systemInfo",
             message: JSON.parse(systemInfo)
@@ -105,7 +118,20 @@ class wsService {
         return
       }
     } catch (error) {
-      console.log(error)
+      
+      /**
+       * 返回错误信息.
+       * @private
+       */
+      wsService.send(socket, {
+        event: "ERR_MESSAGE_PARSE",
+        message: error.message
+      })
+      
+      /**
+       * 如果是节点，记录错误信息.
+       * @private
+       */
       auth.type === "cluster" && EventEmitters.emit("error", {
         inprotype: true,
         event: "节点[ " + remoteAddress + " ]数据解析错误",
