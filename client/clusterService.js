@@ -25,7 +25,7 @@ var os = require("os")
 var assert = require("assert")
 var childProcess = require("child_process")
 var configure = toml.parse(fs.readFileSync("./configure.toml"))
-var socket = new WebSocket(configure.websocket.host)
+//var socket = new WebSocket(configure.websocket.host)
 
 
 /**
@@ -184,50 +184,50 @@ function GetNetWork(fn) {
 }
 
 
-/**
- * websocket已连接.
- * @private
- */
-socket.on("open", function () {
-  try {
-    
-  } catch (error) {
-    return
-  }
-})
+///**
+// * websocket已连接.
+// * @private
+// */
+//socket.on("open", function () {
+//  try {
+//    
+//  } catch (error) {
+//    return
+//  }
+//})
 
 
-/**
- * websocket接收到消息.
- * @private
- */
-socket.on("message", function (data) {
-  try {
-    var params = JSON.parse(data)
-  } catch (error) {
-    return
-  }
-})
-
-
-/**
- * websocket发生错误.
- * @private
- */
-socket.on("error", function (error) {
-  console.log(error)
-})
-
-
-/**
- * websocket断开.
- * @private
- */
-socket.on("close", function () {
-  setTimeout(function () {
-    socket = new WebSocket(configure.socket.host)
-  }, 2000)
-})
+///**
+// * websocket接收到消息.
+// * @private
+// */
+//socket.on("message", function (data) {
+//  try {
+//    var params = JSON.parse(data)
+//  } catch (error) {
+//    return
+//  }
+//})
+//
+//
+///**
+// * websocket发生错误.
+// * @private
+// */
+//socket.on("error", function (error) {
+//  console.log(error)
+//})
+//
+//
+///**
+// * websocket断开.
+// * @private
+// */
+//socket.on("close", function () {
+//  setTimeout(function () {
+//    socket = new WebSocket(configure.socket.host)
+//  }, 2000)
+//})
 
 
 var systemInfoLoop = setInterval(function () {
