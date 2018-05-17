@@ -25,7 +25,7 @@ var os = require("os")
 var assert = require("assert")
 var childProcess = require("child_process")
 var configure = toml.parse(fs.readFileSync("./configure.toml"))
-var socket = new WebSocket(configure.socket.host)
+var socket = new WebSocket(configure.websocket.host)
 
 
 /**
