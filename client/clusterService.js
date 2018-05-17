@@ -145,15 +145,6 @@ function GetNetWork(fn) {
         NetWorkInfoPro("net", function (error, NetWorkTwo) {
           if (! error) {
             NetWorkInfoPro("list", function (error, NetListPort) {
-              var ServiceAssert = {}
-              var NetListPortSet = new Set(NetListPort)
-              Object.keys(ServicePort).forEach(key => {
-                if (NetListPortSet.has(ServicePort[key].toString())) {
-                  ServiceAssert[key] = true
-                } else {
-                  ServiceAssert[key] = false
-                }
-              })
               // 计算差值
               var [
                 NodeName,
@@ -163,13 +154,13 @@ function GetNetWork(fn) {
                 DomainReceive,
                 DomainTransmit
               ] = [
-                  NetWorkTwo.Node.name,
-                  NetWorkTwo.Domain.name,
-                  NetWorkTwo.Node.Receive - NetWorkOne.Node.Receive,
-                  NetWorkTwo.Node.Transmit - NetWorkOne.Node.Transmit,
-                  NetWorkTwo.Domain.Receive - NetWorkOne.Domain.Receive,
-                  NetWorkTwo.Domain.Transmit - NetWorkOne.Domain.Transmit
-                ]
+                NetWorkTwo.Node.name,
+                NetWorkTwo.Domain.name,
+                NetWorkTwo.Node.Receive - NetWorkOne.Node.Receive,
+                NetWorkTwo.Node.Transmit - NetWorkOne.Node.Transmit,
+                NetWorkTwo.Domain.Receive - NetWorkOne.Domain.Receive,
+                NetWorkTwo.Domain.Transmit - NetWorkOne.Domain.Transmit
+              ]
               // 回调
               fn({
                 Node: {
@@ -182,7 +173,7 @@ function GetNetWork(fn) {
                   Receive: DomainReceive,
                   Transmit: DomainTransmit
                 },
-                ServiceAssert: ServiceAssert
+                NetListPort: NetListPort
               })
             })
           }
@@ -199,18 +190,7 @@ function GetNetWork(fn) {
  */
 socket.on("open", function () {
   try {
-    var systemInfoLoop = setInterval(function () {
-      var arch = os.arch()
-      var hostname = os.hostname()
-      var release = os.release()
-      var type = os.type()
-      var cups = os.cpus().length
-      var networkInterfaces = os.networkInterfaces()
-      var loadavg = os.loadavg()
-      var uptime = os.uptime()
-      var freemem = os.freemem()
-      var totalmem = os.totalmem()
-    }, 5000)
+    
   } catch (error) {
     return
   }
@@ -235,7 +215,7 @@ socket.on("message", function (data) {
  * @private
  */
 socket.on("error", function (error) {
-  
+  console.log(error)
 })
 
 
@@ -248,3 +228,45 @@ socket.on("close", function () {
     socket = new WebSocket(configure.socket.host)
   }, 2000)
 })
+
+
+var systemInfoLoop = setInterval(function () {
+    GetNetWork(function (data) {
+      var arch = os.arch()
+      var hostname = os.hostname()
+      var release = os.release()
+      var type = os.type()
+      var cups = os.cpus().length
+      var networkInterfaces = os.networkInterfaces()
+      var loadavg = os.loadavg()
+      var uptime = os.uptime()
+      var freemem = os.freemem()
+      var totalmem = os.totalmem()
+      console.log(JSON.stringify({
+        arch: arch,
+        hostname: hostname,
+        release: release,
+        type: type,
+        cups: cups,
+        networkInterfaces: networkInterfaces,
+        loadavg: loadavg,
+        uptime: uptime,
+        freemem: freemem,
+        totalmem: totalmem,
+        network: data
+      }))
+      socket.send(JSON.stringify({
+        arch: arch,
+        hostname: hostname,
+        release: release,
+        type: type,
+        cups: cups,
+        networkInterfaces: networkInterfaces,
+        loadavg: loadavg,
+        uptime: uptime,
+        freemem: freemem,
+        totalmem: totalmem,
+        network: data
+      }))
+    })
+  }, 5000)
