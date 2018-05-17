@@ -105,17 +105,33 @@ window.__proto__.Read = function (fn) {
      * 获取标准格式时间
      * @private
      */
-    function _ts(n) {
+    function _ts(n, type) {
       var y = n.getFullYear()
         , m = n.getMonth() + 1
-        , d = n.getDate();
+        , d = n.getDate()
+        , h = n.getHours()
+        , i = n.getMinutes()
+        , s = n.getSeconds();
       if (m < 10) {
         m = "0" + m.toString();
       };
       if (d < 10) {
         d = "0" + d.toString();
       };
-      return y + "-" + m + "-" + d;
+      if (type === true) {
+        if (h < 10) {
+          h = "0" + h.toString();
+        };
+        if (i < 10) {
+          i = "0" + i.toString();
+        };
+        if (s < 10) {
+          s = "0" + s.toString();
+        };
+        return y + "-" + m + "-" + d + " " + h + ":" + i + ":" + s;
+      } else {
+        return y + "-" + m + "-" + d;
+      };
     }
     /**
      * 日期加减换算

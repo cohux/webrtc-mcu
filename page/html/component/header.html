@@ -1,0 +1,31 @@
+<!-- 
+  头部顶栏. 
+-->
+<header>
+  <div class="icon" v-bind:style="{
+    width: menuTargetType ? '200px' : '50px'
+  }">
+    <img v-show="menuTargetType === false" src="/public/images/log.png" />
+    <span v-show="menuTargetType === true">WEBRTC MCU MANAGE</span>
+  </div>
+  <div class="model">
+    <%= ({
+      'console': '控制台'        
+    })[model] %>
+  </div>
+  <div class="information">
+    <div class="bell">
+      <span class="fa-layers fa-fw" v-bind:style="{
+        color: bell > 0 ? '#f00222' : ''                                 
+      }">
+        <i class="far fa-bell"></i>
+        <span class="fa-layers-counter">{{ bell }}</span>
+      </span>
+    </div>
+    <div class="user">
+      <a href="/auth/loginOut">
+        登出
+      </a>
+    </div>
+  </div>
+</header>

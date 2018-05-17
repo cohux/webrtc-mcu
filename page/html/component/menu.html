@@ -1,0 +1,35 @@
+<!-- 
+  左侧菜单. 
+-->
+<div class="menu" v-bind:style="{
+  width: menuTargetType ? '200px' : '50px'
+}">
+  <!-- 
+    菜单切换显示隐藏. 
+  -->
+  <div class="menu-target mhover" v-on:click="menuTarget">
+    <i class="fas fa-bars"></i>
+  </div>
+  <!-- 
+    菜单项. 
+  -->
+  <div class="menu-ul">
+    <div
+      class="menu-li mhover"
+      v-for="v of menu"
+      v-bind:class="menuCheckboxClass(v)" 
+      v-on:click="menuCheckbox(v.value)" 
+      v-on:mouseover="v.show = true"
+      v-on:mouseout="v.show = false"
+    >
+      <i class="fas" v-bind:class=" v.icon " v-bind:style="{
+        'text-indent': menuTargetType ? '10px' : '',
+        'text-align': menuTargetType ? '' : 'center',
+        'color': v.show ? '#fff' : ''
+      }"></i>
+      <span v-show="menuSpanType" v-bind:style="{
+        opacity: menuTargetType ? 1 : 0                                      
+      }">{{ v.name }}</span>
+    </div>
+  </div>
+</div>

@@ -19,154 +19,140 @@ const zlib = require("zlib")
 const assert = require("assert")
 const crypto = require("crypto")
 const querystring = require("querystring")
-const childProcess = require("child_process")
 
 
-/*!
- * Date转字符串
+/**
+ * 工具类
  * @private
  */
-exports.DateInt = function (init, split = "-") {
-  let data = parseInt(init), 
-      umt = new Date(1E3 * data)
-  return umt.getFullYear() + split + (umt.getMonth() +1) + split + umt.getDate()
-}
-
-
-/*!
- * MD5计算
- * @private
- */
-exports.md5 = function (str) {
-  try {
-    assert.equal(typeof str, "string")
-    return crypto.createHash("md5").update(str).digest("hex")
-  } catch (error) {
-    return false
+class include {
+  constructor (configure) {
+    this.configure = configure
   }
-}
-
-
-/*!
- * 获取标准格式时间
- * @private
- */
-exports.TimeString = function (now, da) {
-  let year = now.getFullYear(), 
-      month = now.getMonth() + 1,
-      data = da ? da : now.getDate()
-  if (month < 10) {
-    month = "0" + month.toString()
-  }
-  if (data < 10) {
-    data = "0" + data.toString()
-  }
-  return `${year}-${month}-${data}`
-}
-
-
-/*!
- * 对比时间
- * @private
- */
-exports.ifTime = function (a, b) {
-  let atime = new Date(a),
-      btime = new Date(b),
-      autc = atime.getTime(),
-      butc = btime.getTime()
-  if (autc > butc) {
-    return 1
-  } else 
-  if (autc < butc) {
-    return -1
-  } else 
-  if (autc == butc) {
-    return 0
-  }
-}
-
-
-/*!
- * 日期加减换算
- * @private
- */
-exports.AddDate = function (date, days) { 
-  let d = new Date(date)
-  d.setDate(d.getDate() + days)
-  let month = d.getMonth() + 1,
-      data = d.getDate()
-  if (month < 10) {
-    month = "0" + month.toString()
-  }
-  if (data < 10) {
-    data = "0" + data.toString()
-  }
-  return `${d.getFullYear()}-${month}-${data}`
-}
-
-
-/*!
- * 字符串限定
- * @private
- */
-exports.StrLimit = function (str, limit) {
-  if (str.length > limit) {
-    return `${str.substring(0, limit - 3)}...`
-  } else {
-    return str
-  }
-}
-
-
-/*!
- * 加密
- * @private 
- */
-exports.Decrypt = function (keyString) {
-  return new Promise((resolve, reject) => {
+  
+  /**
+   * 计算MD5
+   * @private
+   */
+  md5 (str) {
     try {
-      assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
-      keyString = keyString.toString()
-      let Cipher = crypto.createCipher(configure.crypto.type, configure.crypto.key)
-      let Crypted = Cipher.update(keyString, "utf8", "hex")
-      Crypted += Cipher.final("hex")
-      resolve(Crypted)
-    } catch (Error) {
-      reject(Error)
+      assert.equal(typeof str, "string")
+      return crypto.createHash("md5").update(str).digest("hex")
+    } catch (error) {
+      return false
     }
-  })
-}
-
-
-/*!
- * 解密
- * @private
- */
-exports.Encrypt = function (keyString) {
-  return new Promise((resolve, reject) => {
-    try {
-      assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
-      keyString = keyString.toString()
-      let Decipher = crypto.createDecipher(configure.crypto.type, configure.crypto.key)
-      let Dec = Decipher.update(keyString, "hex", "utf8")
-      Dec += Decipher.final("utf8")
-      resolve(Dec)
-    } catch (Error) {
-      reject(Error)
-    }
-  })
-}
-
-
-/*!
- * 多精度浮点
- * @private
- */
-exports.initMath = function (number, length) {
-  let numberstr = (String(number)).split(".")
-  if (numberstr.length === 1) {
-    return number
-  } else {
-    return Number(`${numberstr[0]}.${numberstr[1].slice(0, length)}`)
   }
+  
+  /**
+   * 时间转字符串
+   * @private
+   */
+  toDate (n, type) {
+    let y = n.getFullYear()
+    let m = n.getMonth() + 1
+    let d = n.getDate()
+    let h = n.getHours()
+    let i = n.getMinutes()
+    let s = n.getSeconds()
+    if (m < 10) {
+      m = "0" + m.toString()
+    }
+    if (d < 10) {
+      d = "0" + d.toString()
+    }
+    if (type === true) {
+      if (h < 10) {
+        h = "0" + h.toString()
+      }
+      if (i < 10) {
+        i = "0" + i.toString()
+      }
+      if (s < 10) {
+        s = "0" + s.toString()
+      }
+      return y + "-" + m + "-" + d + " " + h + ":" + i + ":" + s
+    } else {
+      return y + "-" + m + "-" + d
+    }
+  }
+  
+  /**
+   * 对比时间
+   * @private
+   */
+  ifDate (a, b) {
+    let atime = new Date(a)
+    let btime = new Date(b)
+    let autc = atime.getTime()
+    let butc = btime.getTime()
+    if (autc > butc) {
+      return 1
+    } else 
+    if (autc < butc) {
+      return -1
+    } else 
+    if (autc == butc) {
+      return 0
+    }
+  }
+  
+  /**
+   * 加密
+   * @private
+   */
+  decrypt (keyString) {
+    let { configure } = this
+    return new Promise(function (resolve, reject) {
+      try {
+        assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
+        keyString = keyString.toString()
+        let Cipher = crypto.createCipher(configure.crypto.type, configure.crypto.key)
+        let Crypted = Cipher.update(keyString, "utf8", "hex")
+        Crypted += Cipher.final("hex")
+        resolve(Crypted)
+      } catch (Error) {
+        reject(Error)
+      }
+    })
+  }
+  
+  /**
+   * 解密
+   * @private
+   */
+  encrypt (keyString) {
+    let { configure } = this
+    return new Promise(function (resolve, reject) {
+      try {
+        assert.equal(typeof keyString === "string" || typeof keyString === "number", true)
+        keyString = keyString.toString()
+        let Decipher = crypto.createDecipher(configure.crypto.type, configure.crypto.key)
+        let Dec = Decipher.update(keyString, "hex", "utf8")
+        Dec += Decipher.final("utf8")
+        resolve(Dec)
+      } catch (Error) {
+        reject(Error)
+      }
+    })
+  }
+  
+  /**
+   * 读取文件
+   * @private
+   */
+  readFile (path) {
+    return new Promise(function (resolve, reject) {
+      fs.readFile(path, function (error, data) {
+        error ? reject(error) : resolve(data)
+      })
+    })
+  }
+  
 }
+
+
+/**
+ * 导出类
+ * @private
+ */
+module.exports = include

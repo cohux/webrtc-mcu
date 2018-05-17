@@ -6,66 +6,85 @@
  */
 
 
+/**
+ * 数据库服务
+ * @private
+ */
+
+
 "use strict"
 
 
 /**
  * Module dependencies.
  */
-const fs = require("fs")
-const toml = require("toml")
-const configure = toml.parse(fs.readFileSync("./configure.toml"))
+const redis = require("redis")
 const { promisify } = require("util")
 const { MongoClient } = require("mongodb")
-const redis = require("redis")
+const { EventEmitter } = require("events")
 
 
 /**
- * 数据库连接对象
+ * 事件处理
  * @private
  */
-let MongoDBClient = {}
-let RedisClient = redis.createClient(configure.redis)
+let EventEmitters = new EventEmitter()
 
 
-/*!
- * 连接到mongodb
+/**
+ * 数据库连接类
  * @private
  */
-MongoClient.connect(configure.mongodb.path, function (error, Mongo) {
-  for (let v of configure.mongodb.document) {
-    MongoDBClient[v] = Mongo.db(configure.mongodb.dbname).collection(v)
+class dbService {
+  constructor (configure) {
+    this.configure = configure
   }
-})
-
-
-/*!
- * redis连接失败时触发
- * 触发错误
- */
-RedisClient.on("error", function (error) {
-  setTimeout(function () {
-    RedisClient = redis.createClient(configure.redis)
-  }, 2000)
-})
-
-
-/*!
- * 修改 redis 对象的原型链
- * 增加 async 异步 promise 封装
- * 以大写字母开头的原方法和类
- */
-RedisClient.on("ready", function () {
-  RedisClient.__proto__.Del = promisify(RedisClient.del).bind(RedisClient)
-  RedisClient.__proto__.Get = promisify(RedisClient.get).bind(RedisClient)
-})
+  
+  /**
+   * 连接数据库
+   * @private
+   */
+  connection () {
+    let { configure } = this
+    let MongoDBClient = {}
+    let RedisClient = redis.createClient(configure.redis)
+    let mongoURI = "mongodb://" + configure.mongodb.host + ":" + configure.mongodb.port
+    MongoClient.connect(mongoURI, function (error, Mongo) {
+      if (error) {
+        EventEmitters.emit("error", error)
+        throw error
+      } else {
+        for (let v of configure.mongodb.document) {
+          MongoDBClient[v] = Mongo.db(configure.mongodb.dbname).collection(v)
+        }
+      }
+    })
+    RedisClient.on("ready", function () {
+      RedisClient.__proto__.Del = promisify(RedisClient.del).bind(RedisClient)
+      RedisClient.__proto__.Get = promisify(RedisClient.get).bind(RedisClient)
+    })
+    RedisClient.on("error", function (error) {
+      EventEmitters.emit("error", error)
+      throw error
+    })
+    return {
+      MongoDBClient,
+      RedisClient
+    }
+  }
+  
+  /**
+   * 监听事件
+   * @private
+   */
+  on (event, emit) {
+    EventEmitters.on(event, emit)
+  }
+}
 
 
 /**
- * 导出数据库连接
+ * 导出数据库连接类
  * @private
  */
-module.exports = {
-  MongoDBClient,
-  RedisClient
-}
+module.exports = dbService

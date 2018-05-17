@@ -22,13 +22,14 @@ keys = [
 
 # mongodb数据库连接配置
 [mongodb]
-path = "mongodb://106.15.66.51:27017"
+host = "106.15.66.51"
+port = 27017
 dbname = "console"
 document = [
   "admin",
-  "event",
   "log",
-  "system"
+  "system",
+  "cluster"
 ]
 
 # mongodb数据库认证配置
@@ -48,19 +49,28 @@ key = "csakopkdsoai08978c07c08"
 
 # 邮件服务配置
 [nodemailer]
-service = "smtp.163.com"
-host = "smtp.163.com"
+service = "smtp.qq.com"
+host = "smtp.qq.com"
 port = 465
 secureConnection = true
 secure = true
 
 # 邮件服务认证配置
 [nodemailer.auth]
-user = "duozan55@163.com"
-pass = "duozhuan886688"
+user = "1198100147@qq.con"
+pass = "fxcmkcycmkzfhijb"
+
+# 管理服务接入端口
+[service]
+port = 88
+router = "/masterApi"
+
+# 日志配置
+[log]
+path = "E://Package/webrtc-mcu/mcu.log"
 
 # mcu服务id
-[mcu.service]
+[mcu]
 superServiceId = "5af67653f7ea137358023ec6"
 superServiceKey = "65sUUxO/VNbqmnyOy21vYDCZDDFwxsHOXCitou8xs5EqSJLbE0HQmwaVX5dM2psENArqknBU2erbFW4d7AH7UzQ2VO+jzbD2+GmXy2YWnZA6kz7tMpl+V9pCzI72fUyNZoQrLa0dOCi3HtaLTqnQo2t9FB5cjaLT3UVNdmXDTz8="
 sampleServiceId = "5af67654f7ea137358023ec7"

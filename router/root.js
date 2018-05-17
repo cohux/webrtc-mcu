@@ -33,5 +33,35 @@ router.get("/", async function (req, res) {
 })
 
 
+/**
+ * js组件模板
+ * @private
+ */
+router.get("/useJs/:model", async function (req, res) {
+  try {
+    let { model } = req.params
+    let indexJs = await req.include.readFile(path.join(req.configure.http.public, "/js/index.js"))
+    let componentJs = await req.include.readFile(path.join(req.configure.http.public, "/js/component/", model))
+    indexJs = indexJs.toString()
+    componentJs = componentJs.toString()
+    for (let v of indexJs.match(/(?<=\[\!\s*)(?!\s)([^!]|\!(?!\]))+(?<!\s)(?=\s*\!\])/g)) {
+      let componentJsModel = componentJs.match(new RegExp(`\\[\\!\\s<=${v}=>([\\s\\S]*?)\\!\\]`, "g"))
+      if (componentJsModel !== null) {
+        let jsText = componentJsModel[0]
+        jsText = jsText.replace(`[! <=${v}=>`, "")
+        jsText = jsText.replace("!]", "")
+        indexJs = indexJs.replace(`[! ${v} !]`, jsText)
+      } else {
+        indexJs = indexJs.replace(`[! ${v} !]`, "")
+      }
+    }
+    res.set("Content-Type", "application/javascript; charset=UTF-8")
+    res.send(Buffer.from(indexJs))
+  } catch (error) {
+    res.sendStatus(404)
+  }
+})
+
+
 // 暴露出路由
 module.exports = router

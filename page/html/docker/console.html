@@ -1,0 +1,191 @@
+<!-- 
+  顶部信息. 
+-->
+<b-container class="bv-example-row" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow console-top-info">
+        <i class="fas fa-users"></i>
+        <p>{{ information.user }}</p>
+        <span>在线人数</span>
+      </div>
+    </b-col>
+    <b-col>
+      <div class="v-shadow console-top-info">
+        <i class="fas fa-home"></i>
+        <p>{{ information.room }}</p>
+        <span>房间数量</span>
+      </div>
+    </b-col>
+    <b-col>
+      <div class="v-shadow console-top-info">
+        <i class="fas fa-exclamation"></i>
+        <p>{{ information.error }}</p>
+        <span>服务警报</span>
+      </div>
+    </b-col>
+    <b-col>
+      <div class="v-shadow console-top-info">
+        <i class="fas fa-server"></i>
+        <p>{{ information.server }}</p>
+        <span>节点数量</span>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+
+<!-- 
+  节点列表. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            节点运行状态
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>节点名称</span>
+              </b-col>
+              <b-col>
+                <span>CPU</span>
+              </b-col>
+              <b-col>
+                <span>内存</span>
+              </b-col>
+              <b-col>
+                <span>I/O</span>
+              </b-col>
+              <b-col>
+                <span>网络</span>
+              </b-col>
+              <b-col>
+                <span>连接数</span>
+              </b-col>
+              <b-col>
+                <span>房间数</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i" v-for="v of server">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ v.name }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <div class="list-progress">
+                  <div class="list-progress-rate">
+                    <div class="list-progress-rate-i" v-bind:style="{
+                      'width': v.cpu + '%',
+                      'background-color': v.cpu > 90 ? '#f00222' : '#0c9cf8'                                   
+                    }"></div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col class="list-value">
+                <div class="list-progress">
+                  <div class="list-progress-rate">
+                    <div class="list-progress-rate-i" v-bind:style="{
+                      'width': v.monery + '%',
+                      'background-color': v.monery > 90 ? '#f00222' : '#0c9cf8'                                   
+                    }"></div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col class="list-value">
+                <div class="list-progress">
+                  <div class="list-progress-rate">
+                    <div class="list-progress-rate-i" v-bind:style="{
+                      'width': v.io + '%',
+                      'background-color': v.io > 90 ? '#f00222' : '#0c9cf8'                                   
+                    }"></div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col class="list-value">
+                <div class="list-progress">
+                  <div class="list-progress-rate">
+                    <div class="list-progress-rate-i" v-bind:style="{
+                      'width': v.network + '%',
+                      'background-color': v.network > 90 ? '#f00222' : '#0c9cf8'                                   
+                    }"></div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ v.user }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ v.room }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+
+<!-- 
+  事件列表. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-weight"></i>
+            事件日志
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li list-text-left">
+            <b-row>
+              <b-col cols="2">
+                <span>事件类型</span>
+              </b-col>
+              <b-col cols="2">
+                <span>时间</span>
+              </b-col>
+              <b-col cols="8">
+                <span>详情</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-text-left list-hover" v-for="v of event">
+            <b-row>
+              <b-col class="list-value" cols="2">
+                <span style="
+                  text-indent: 0.5em;
+                ">
+                  <i v-if="v.type === 'info' " class="fas fa-asterisk" style="
+                    margin-right: 10px;
+                    color: #00b150;
+                  "></i>
+                  <i v-if="v.type === 'error' " class="fas fa-exclamation-circle" style="
+                    margin-right: 10px;
+                    color: #f00222;
+                  "></i>
+                  {{ v.type === 'error' ? '错误' : '提醒' }}
+                </span>
+              </b-col>
+              <b-col class="list-value" cols="2">
+                <span>{{ exports.TimeString(new Date(v.time), true) }}</span>
+              </b-col>
+              <b-col class="list-value" cols="8">
+                <span>{{ v.event }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>

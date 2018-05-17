@@ -30,7 +30,11 @@ const router = express.Router()
 router.get("/console", async function (req, res) {
   try {
     assert.equal(req.userLogin, true)
-    res.render("console", {})
+    res.render("index", {
+      model: "console",
+      user: req.userData,
+      hostname: req.configure.http.host
+    })
   } catch (error) {
     res.redirect("/view/login")
   }
@@ -38,13 +42,12 @@ router.get("/console", async function (req, res) {
 
 
 /**
- * 控制台
+ * 登录
  * @private
  */
 router.get("/login", async function (req, res) {
   res.view("login.html")
 })
-
 
 
 // 暴露出路由

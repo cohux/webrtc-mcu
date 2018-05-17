@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <%- include('component/head.html', { 
+      model: model,
+      hostname: hostname
+    }) %>
+  </head>
+  <body>
+    
+    <!-- 
+      vue容器. 
+    -->
+    <div id="vue-docker" v-cloak>
+      <%- include('component/header.html', { model: model, user: user }) %>
+      <%- include('component/menu.html', { model: model }) %>
+      
+      <!-- 
+        视图容器. 
+      -->
+      <div class="window" v-bind:style="{
+        width: windowWidth + 'px',
+        height: windowHeight + 'px'
+      }">
+        <% let module = typeof data === 'object' ? data : {} %>
+        <%- include('docker/' + model + '.html', { data: module }) %>
+      </div>
+    </div>
+  </body>
+</html>

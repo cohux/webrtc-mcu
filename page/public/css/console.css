@@ -1,0 +1,30 @@
+.console-top-info {
+  padding: 15px;
+  display: flex;
+}
+
+.console-top-info i {
+  font-size: 2em;
+  color: #999;
+  margin-left: 10px;
+}
+
+.console-top-info * {
+  width: 33.33%;
+}
+
+.console-top-info p {
+  margin-bottom: 0;
+  color: #0c9cf8;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: right;
+}
+
+.console-top-info span {
+  color: #999;
+  font-size: 0.8em;
+  text-align: right;
+  font-weight: bold;
+}

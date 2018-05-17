@@ -8,6 +8,7 @@
 
  /**
   * 路由中间件
+  * @private
   */
  
 
@@ -17,19 +18,21 @@
  /**
   * Module dependencies.
   */
- const assert = require("assert")
- const path = require("path")
- const mongodb = require("mongodb")
+const assert = require("assert")
+const path = require("path")
+const mongodb = require("mongodb")
+const { EventEmitter } = require("events")
 
 
  /**
   * 模块缓存类
   * @private
   */
- let include
- let configure
- let dirname
- let dbService
+let include
+let configure
+let dirname
+let dbService
+let EventEmitters = new EventEmitter()
 
 
 /**
@@ -87,6 +90,22 @@ class middleware {
     res.view = function (html) {
       res.sendFile(path.join(configure.http.views, html))
     }
+    
+    /**
+     * 抛出错误
+     * @private
+     */
+    req.error = function (error) {
+      EventEmitters.emit("error", error)
+    }
+    
+    /**
+     * 抛出日志
+     * @private
+     */
+    req.info = function (event, message) {
+      EventEmitters.emit("info", { event, message })
+    }
 
     /**
      * 过滤器
@@ -94,7 +113,7 @@ class middleware {
      */
     try {
       let { views } = req.session
-      assert.equal(views !== undefined && views !== null, true)
+      assert.equal(views !== undefined && isNaN(views), true)
       let data = await dbService.RedisClient.Get(views)
       assert.equal(data !== undefined, true)
       let user = JSON.parse(data)
@@ -110,6 +129,14 @@ class middleware {
      * @private
      */
     next()
+  }
+  
+  /**
+   * 监听
+   * @private
+   */
+  on (event, emit) {
+    EventEmitters.on(event, emit)
   }
 }
 

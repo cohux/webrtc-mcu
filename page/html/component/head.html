@@ -1,0 +1,63 @@
+<title><%= ({
+  'console': '控制台'        
+})[model] %> - 管理后台</title>
+<!-- 
+  Module dependencies. 
+-->
+<meta charset="UTF-8"/>
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="/public/images/favicon.png" mce_href="favicon.ico" rel="icon" type="image/x-icon"/>
+<link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap.min.css"/>
+<link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap-vue.css"/>
+<link rel="stylesheet" href="/public/css/lib/fontawesome.css">
+<link rel="stylesheet" href="/public/css/lib/animate.css"/>
+<link rel="stylesheet" href="/public/css/lib/loaders.css"/>
+<link rel="stylesheet" href="/public/css/gload.css"/>
+<script src="/public/js/bin/gload.js"></script>
+<script src="/public/js/bin/axios.js"></script>
+<script src="/public/js/bin/vue.js"></script>
+<script src="/public/js/bin/polyfill.min.js"></script>
+<script src="/public/js/bin/bootstrap-vue.js"></script>
+<script src="/public/js/lib.js"></script>
+<!-- 
+  Use data. 
+-->
+<script>
+  let hostname = "<%= hostname %>"
+  let useData = {
+    value: "<%= model %>",
+    menu: [
+      { 
+        name: "控制台",
+        value: "console",
+        icon: "fa-desktop",
+        show: false
+      },
+      { 
+        name: "服务管理",
+        value: "service",
+        icon: "fa-server",
+        show: false
+      },
+      {
+        name: "房间管理",
+        value: "room",
+        icon: "fa-home",
+        show: false
+      },
+      {
+        name: "用户管理",
+        value: "user",
+        icon: "fa-user",
+        show: false
+      }
+    ]
+  }
+</script>
+<!-- 
+  Use dependencies. 
+-->
+<script src="/useJs/<%= model %>.js"></script>
+<link rel="stylesheet" href="/public/css/<%= model %>.css"/>

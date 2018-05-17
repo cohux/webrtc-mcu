@@ -13,6 +13,7 @@
  * Module dependencies.
  */
 const fs = require("fs")
+const ws = require("ws")
 const toml = require("toml")
 const configure = toml.parse(fs.readFileSync("./configure.toml"))
 const express = require("express")
@@ -26,9 +27,16 @@ const cookieSession = require("cookie-session")
 const include = require("./include")
 const middleware = require("./middleware")
 const dbService = require("./dbService")
+const wsService = require("./wsService")
+const logService = require("./logService")
 const server = http.createServer(app)
-const websocket = require("socket.io")(server)
-const middlewares = new middleware(include, dbService, configure, __dirname)
+const websocket = new ws.Server({ server })
+const dbServices = new dbService(configure)
+const includes = new include(configure)
+const dbConnection = dbServices.connection()
+const middlewares = new middleware(includes, dbConnection, configure, __dirname)
+const wsServices = new wsService(includes, dbConnection, configure, __dirname, websocket)
+const logServices = new logService(includes, dbConnection, configure)
 
 
 /**
@@ -49,15 +57,17 @@ app.engine(".html", ejs.__express)
  * 路由模块
  * @private
  */
-//app.use("/package.appcache", express.static("./package.appcache"))
 app.use("/public", express.static(configure.http.public))
-app.use(/^((?!\.).)*$/, middlewares.filter)
+app.use([/^((?!\.).)*$/, "/useJs"], middlewares.filter)
 app.use("/", require("./router/root"))
 app.use("/view", require("./router/view"))
 app.use("/auth", require("./router/auth"))
+app.use("/log", require("./router/log"))
 
 
-/*!
+/**
  * start service.
+ * @private
  */
 server.listen(configure.http.port)
+logServices.bind([ wsServices, dbServices, middlewares ])

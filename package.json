@@ -16,8 +16,8 @@
         "mongodb": "^3.0.5",
         "nodemailer": "^4.6.4",
         "redis": "^2.8.0",
-        "socket.io": "^2.1.0",
-        "toml": "^2.3.3"
+        "toml": "^2.3.3",
+        "ws": "^5.1.1"
     },
     "devDependencies": {},
     "keywords": [
