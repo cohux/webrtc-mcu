@@ -151,7 +151,7 @@ Now please start enjoying!
 
 * Cluster node new, edit, status view.
 
-![server](./src/server.png)
+![server](./src/serverv1.png)
 
 * View server information.
 
@@ -159,11 +159,11 @@ Now please start enjoying!
 
 * WebRTC service list view edit add.
 
-![service](./src/service.png)
+![service](./src/servicev1.png)
 
 * Rooms list view edit add.
 
-![rooms](./src/rooms.png)
+![rooms](./src/roomsv1.png)
 
 * Room edit.
 
