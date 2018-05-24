@@ -167,4 +167,8 @@ WebRTC service list view edit add.
 
 Rooms list view edit add.
 
+![rooms](./src/rooms.png)
+
+Room edit.
+
 ![room-edit](./src/roomedit.png)
