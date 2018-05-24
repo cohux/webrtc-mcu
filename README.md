@@ -1,12 +1,18 @@
 ![intel-mcu-icon](./src/intel_mcu.png)
 
-Create high-performance, reliable, and scalable real-time communication solutions.
-Server and client tools to deliver RTC experiences with video conferencing capabilities.
-Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.
+Create high-performance, reliable, and scalable real-time communication solutions.<br>
+Server and client tools to deliver RTC experiences with video conferencing capabilities.<br>
+Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.<br>
 
-**Version 0.0.1 Nightly.**
 
-# Install
+# Auto This
+
+* Version 0.0.1 Nightly.
+* Node.JS Version >= 8.1.
+* This service need MongoDB and Redis.
+* The service can be run independently, (Intel WebRTC MCU) needs to connect to this service, managed by this service.
+
+## Install
 
 ```console
 npm install
