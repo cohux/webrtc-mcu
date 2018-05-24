@@ -1,13 +1,16 @@
 ![intel-mcu-icon](./src/intel_mcu.png)
 
-Create high-performance, reliable, and scalable real-time communication solutions.
-Server and client tools to deliver RTC experiences with video conferencing capabilities.
-Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.
+**Create high-performance, reliable, and scalable real-time communication solutions.**
 
-# WebRTC-MCU
-* Version 0.0.1 Nightly<br>
-* 英特尔 WebRTC MCU 集群管理服务<br>
-* 使用 Node.JS 构建，版本大于 v8.1.1<br>
+**Server and client tools to deliver RTC experiences with video conferencing capabilities.**
+
+**Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.**
+
+# Intel-WebRTC-MCU-Manage
+
+* Version 0.0.1 Nightly.
+* 英特尔 WebRTC MCU 集群管理服务.
+* 使用 Node.JS 构建，版本大于 v8.1.1.
 
 
 > 日志
