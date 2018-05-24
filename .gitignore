@@ -62,3 +62,4 @@ typings/
 
 mcu.log
 configure.toml
+.vscode
