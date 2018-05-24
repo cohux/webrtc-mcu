@@ -1,4 +1,4 @@
-[!intel-mcu-icon](./src/intel_mcu.png)
+![intel-mcu-icon](./src/intel_mcu.png)
 
 Create high-performance, reliable, and scalable real-time communication solutions.
 Server and client tools to deliver RTC experiences with video conferencing capabilities.
