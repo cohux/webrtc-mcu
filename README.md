@@ -5,9 +5,28 @@ Server and client tools to deliver RTC experiences with video conferencing capab
 Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.<br>
 
 
-# Auto
+# Version
 
-* Version 0.0.1 Nightly.
+* 0.0.1 Nightly.
+
+## Module dependencies
+
+* [arguments.type](https://github.com/xivistudios/arguments.type).
+* [axios](https://github.com/axios/axios).
+* [body-parser](https://github.com/expressjs/body-parser).
+* [cookie-parser](https://github.com/expressjs/cookie-parser).
+* [cookie-session](https://github.com/expressjs/cookie-session).
+* [ejs](https://github.com/tj/ejs).
+* [express](https://github.com/expressjs/express).
+* [mongodb](https://github.com/mongodb/node-mongodb-native).
+* [nodemailer](https://github.com/nodemailer/nodemailer).
+* [redis](https://github.com/NodeRedis/node_redis).
+* [toml](https://github.com/BinaryMuse/toml-node).
+* [ws](https://github.com/websockets/ws).
+
+## Auto
+
+* .
 * Node.JS Version >= 8.1.
 * This service need MongoDB and Redis.
 * The service can be run independently, **Intel WebRTC MCU** needs to connect to this service, managed by this service.
@@ -106,9 +125,6 @@ You need to create a new default management account in the database.
 
 ```console
 ~ mongo
-```
-
-```console
 use console
 db.admin.insert({ username: "root", password: "root" })
 ```
@@ -118,11 +134,13 @@ next.
 Start this Service.
 
 ```console
-node index.js
+~ node index.js
 ```
 
 or use pm2
 
 ```console
-pm2 start index.js -i auto
+~ pm2 start index.js -i auto
 ```
+
+Now please start enjoying!

@@ -1,7 +1,7 @@
 {
     "name": "webrtc-mcu",
     "version": "0.0.1",
-    "description": "INTEL WebRTC MCU 集群管理服务",
+    "description": "intel webrtc mcu manage service",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
