@@ -19,13 +19,13 @@ Optimized for Intel® Architecture to take full advantage of Intel hardware-acce
 You neead install npm package.
 
 ```console
-npm install
+~ npm install
 ```
 
 You need to create a new configuration file.
 
 ```console
-vim ./configure.toml
+~ vim ./configure.toml
 ```
 
 ```console
@@ -59,7 +59,6 @@ document = [
   "system",
   "cluster"
 ]
-
 
 # mongodb auth configure
 # !when you need to fill in the certification
@@ -99,4 +98,31 @@ router = "/masterApi"
 # log configure
 [log]
 path = "./mcu.log"
+```
+
+Save this configuration file.
+next.
+You need to create a new default management account in the database.
+
+```console
+~ mongo
+```
+
+```console
+use console
+db.admin.insert({ username: "root", password: "root" })
+```
+
+You can now login to this service with this newly created default admin account.
+next.
+Start this Service.
+
+```console
+node index.js
+```
+
+or use pm2
+
+```console
+pm2 start index.js -i auto
 ```
