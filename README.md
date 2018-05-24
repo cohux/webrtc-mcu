@@ -1,8 +1,6 @@
 ![intel-mcu-icon](./src/intel_mcu.png)
 
-Create high-performance, reliable, and scalable real-time communication solutions.<br>
-Server and client tools to deliver RTC experiences with video conferencing capabilities.<br>
-Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.<br>
+Create high-performance, reliable, and scalable real-time communication solutions. Server and client tools to deliver RTC experiences with video conferencing capabilities. Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.
 
 
 # Version
@@ -26,7 +24,6 @@ Optimized for Intel® Architecture to take full advantage of Intel hardware-acce
 
 ## Auto
 
-* .
 * Node.JS Version >= 8.1.
 * This service need MongoDB and Redis.
 * The service can be run independently, **Intel WebRTC MCU** needs to connect to this service, managed by this service.
@@ -144,3 +141,30 @@ or use pm2
 ```
 
 Now please start enjoying!
+
+
+## Instructions for use
+
+Console included Brief information report for the entire service.
+
+![index](./src/index.png)
+
+The default included module.
+
+![module](./src/module.png)
+
+Cluster node new, edit, status view.
+
+![server](./src/server.png)
+
+View server information.
+
+![view-cluster](./src/viewcluster.png)
+
+WebRTC service list view edit add.
+
+![service](./src/service.png)
+
+Rooms list view edit add.
+
+![room-edit](./src/roomedit.png)
