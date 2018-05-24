@@ -69,10 +69,3 @@ router = "/masterApi"
 # 日志配置
 [log]
 path = "/root/package/webrtc-mcu/mcu.log"
-
-# mcu服务id
-[mcu]
-superServiceId = "5af67653f7ea137358023ec6"
-superServiceKey = "65sUUxO/VNbqmnyOy21vYDCZDDFwxsHOXCitou8xs5EqSJLbE0HQmwaVX5dM2psENArqknBU2erbFW4d7AH7UzQ2VO+jzbD2+GmXy2YWnZA6kz7tMpl+V9pCzI72fUyNZoQrLa0dOCi3HtaLTqnQo2t9FB5cjaLT3UVNdmXDTz8="
-sampleServiceId = "5af67654f7ea137358023ec7"
-sampleServiceKey = "kQI3boVIWe7cU7yRtK4GCsZbZ93afGQxmtRyH5CHH8EizhLs7eL83cnu1QL+FbLZYERaco2Z4TyXqT/ID0WE2txi6Ukc5CKOOWr16LXJzCmuvc5jAeIBwrBzWTprZG5CtQZ+tKm7IbAvVHaP1167Kl+SGfgAEl+8Rw5dUKsNzxo="
