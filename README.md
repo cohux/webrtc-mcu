@@ -16,8 +16,24 @@ Optimized for Intel® Architecture to take full advantage of Intel hardware-acce
 
 ## Install
 
+You neead install npm package.
+
 ```console
 npm install
 ```
 
-## 
+You need to create a new configuration file.
+
+```console
+vim ./configure.toml
+```
+
+```console
+# http configure
+[http]
+host = "localhost" # you web host
+port = 80 # you need listen port
+origin = "http://localhost" # http origin
+views = "./page/html" # html view files
+public = "./page/public" # html static public files
+```
