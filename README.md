@@ -145,30 +145,53 @@ Now please start enjoying!
 
 ## Instructions for use
 
-Console included Brief information report for the entire service.
+* Console included Brief information report for the entire service.
 
 ![index](./src/index.png)
 
-The default included module.
+* The default included module.
 
 ![module](./src/module.png)
 
-Cluster node new, edit, status view.
+* Cluster node new, edit, status view.
 
 ![server](./src/server.png)
 
-View server information.
+* View server information.
 
 ![view-cluster](./src/viewcluster.png)
 
-WebRTC service list view edit add.
+* WebRTC service list view edit add.
 
 ![service](./src/service.png)
 
-Rooms list view edit add.
+* Rooms list view edit add.
 
 ![rooms](./src/rooms.png)
 
-Room edit.
+* Room edit.
 
 ![room-edit](./src/roomedit.png)
+
+
+## MIT License
+
+Copyright (c) 2018 Mr.Panda.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
