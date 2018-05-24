@@ -22,7 +22,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 * [toml](https://github.com/BinaryMuse/toml-node).
 * [ws](https://github.com/websockets/ws).
 
-## Auto
+## About
 
 * Node.JS Version >= 8.1.
 * This service need MongoDB and Redis.
