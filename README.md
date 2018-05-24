@@ -147,27 +147,27 @@ Now please start enjoying!
 
 * Console included Brief information report for the entire service.
 
-![index](./src/index.png)
+![index](./src/indexv2.png)
 
 * Cluster node new, edit, status view.
 
-![server](./src/serverv1.png)
+![server](./src/serverv1v2.png)
 
 * View server information.
 
-![view-cluster](./src/viewcluster.png)
+![view-cluster](./src/viewclusterv2.png)
 
 * WebRTC service list view edit add.
 
-![service](./src/servicev1.png)
+![service](./src/servicev1v2.png)
 
 * Rooms list view edit add.
 
-![rooms](./src/roomsv1.png)
+![rooms](./src/roomsv1v2.png)
 
 * Room edit.
 
-![room-edit](./src/roomedit.png)
+![room-edit](./src/roomeditv2.png)
 
 
 ## MIT License
