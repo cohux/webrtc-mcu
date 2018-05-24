@@ -149,10 +149,6 @@ Now please start enjoying!
 
 ![index](./src/index.png)
 
-* The default included module.
-
-![module](./src/module.png)
-
 * Cluster node new, edit, status view.
 
 ![server](./src/server.png)
