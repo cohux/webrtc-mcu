@@ -145,11 +145,30 @@ window.__proto__.Read = function (fn) {
     /**
      * 验证类型
      */
-    function _assert(a, b) {
+    function _assert(a, b, m) {
       if (a == b) {
         return true;
       } else {
-        throw new Error(a.toString() + " != " + b.toString());
+        throw new Error(m || a.toString() + " != " + b.toString());
+      }
+    };
+    /**
+     * URL查询转对象
+     * @private
+     */
+    function _url (url) {
+      var a = url.split("?")
+      if (a.length === 1) {
+        return {}
+      } else {
+        var e = {}
+        for (var i = 0, k = a[1].split("&"); i < k.length; i ++) {
+          var t = k[i].split("=")
+          if (t.length > 1) {
+            e[t[0]] = t[1]
+          }
+        }
+        return e
       }
     };
     // 回调方法
@@ -158,7 +177,8 @@ window.__proto__.Read = function (fn) {
       Print: _p,
       TimeString: _ts,
       AddDate: _adt,
-      assert: _assert
+      assert: _assert,
+      urlQuery: _url
     });
     // 写入节点列表
     document.body.appendChild(_print());

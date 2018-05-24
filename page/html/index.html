@@ -23,7 +23,7 @@
         height: windowHeight + 'px'
       }">
         <% let module = typeof data === 'object' ? data : {} %>
-        <%- include('docker/' + model + '.html', { data: module }) %>
+        <%- include('docker/' + model + '.html', { data: model }) %>
       </div>
     </div>
   </body>

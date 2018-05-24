@@ -38,7 +38,7 @@ router.post("/login", async function (req, res) {
     assert.deepEqual(Data !== null && Data !== undefined, true, "用户不存在或密码错误")
     assert.deepEqual(typeof DecryptKey, "string", "处理密码错误")
     req.session.views = Data.username
-    Data.DecryptKey = DecryptKey
+    Data.decryptKey = DecryptKey
     Data._id = String(Data._id)
     req.redis.set(Data.username, JSON.stringify(Data))
     res.cookie("password", DecryptKey, { httpOnly: true })

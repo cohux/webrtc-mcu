@@ -93,18 +93,14 @@ class logService {
          let {
            message, stack, inprotype, event
          } = error
-         if (inprotype === true) {
-           inthis.append({
-             type: "error",
-             event, message
-           })
-         } else {
-           inthis.append({
-             type: "error",
-             event: message,
-             message: stack
-           })
-         }
+         inthis.append(inprotype === true ? {
+           type: "error",
+           event, message
+         } : {
+           type: "error",
+           event: message,
+           message: stack
+         })
        })
        v.on("info", function (info) {
          let {

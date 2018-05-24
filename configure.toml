@@ -8,8 +8,8 @@
 host = "qxrtc.qixun.tv"
 port = 80
 origin = "http://qxrtc.qixun.tv"
-views = "root/package/webrtc-mcu/page/html"
-public = "root/package/webrtc-mcu/page/public"
+views = "/root/package/webrtc-mcu/page/html"
+public = "/root/package/webrtc-mcu/page/public"
 
 # http session 配置
 [session]
@@ -22,7 +22,7 @@ keys = [
 
 # mongodb数据库连接配置
 [mongodb]
-host = "0.0.0.0"
+host = "127.0.0.1"
 port = 27017
 dbname = "console"
 document = [
@@ -39,8 +39,9 @@ password = "xiaopange520"
 
 # redis数据库连接配置
 [redis]
-host = "0.0.0.0"
+host = "127.0.0.1"
 port = 6379
+password = "panda@2018"
 
 # 加密配置
 [crypto]
@@ -58,7 +59,7 @@ secure = true
 # 邮件服务认证配置
 [nodemailer.auth]
 user = "1198100147@qq.con"
-pass = "fxcmkcycmkzfhijb"
+pass = ""
 
 # 管理服务接入端口
 [service]
@@ -67,7 +68,7 @@ router = "/masterApi"
 
 # 日志配置
 [log]
-path = "root/package/webrtc-mcu/mcu.log"
+path = "/root/package/webrtc-mcu/mcu.log"
 
 # mcu服务id
 [mcu]

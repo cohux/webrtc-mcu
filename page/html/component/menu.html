@@ -2,7 +2,8 @@
   左侧菜单. 
 -->
 <div class="menu" v-bind:style="{
-  width: menuTargetType ? '200px' : '50px'
+  width: menuTargetType ? '200px' : '50px',
+  height: windowHeight + 'px'
 }">
   <!-- 
     菜单切换显示隐藏. 
@@ -14,22 +15,47 @@
     菜单项. 
   -->
   <div class="menu-ul">
-    <div
-      class="menu-li mhover"
+    <div 
       v-for="v of menu"
-      v-bind:class="menuCheckboxClass(v)" 
-      v-on:click="menuCheckbox(v.value)" 
-      v-on:mouseover="v.show = true"
-      v-on:mouseout="v.show = false"
     >
-      <i class="fas" v-bind:class=" v.icon " v-bind:style="{
-        'text-indent': menuTargetType ? '10px' : '',
-        'text-align': menuTargetType ? '' : 'center',
-        'color': v.show ? '#fff' : ''
-      }"></i>
-      <span v-show="menuSpanType" v-bind:style="{
-        opacity: menuTargetType ? 1 : 0                                      
-      }">{{ v.name }}</span>
+      <div 
+        class="menu-title mhover"
+        v-on:click="v.show = v.show === true ? false : true"
+      >
+        <i 
+          class="fas" 
+          v-bind:class="v.icon"
+          style="text-indent: 10px;"
+        ></i>
+        <span 
+          v-show="menuSpanType"
+          v-bind:style="{
+            opacity: menuTargetType ? 1 : 0                                      
+          }"
+        >{{ v.name }}</span>
+      </div>
+      <div 
+        class="menu-arr" 
+        v-show="v.show"
+      >
+        <div
+          class="menu-li mhover"
+          v-for="x of v.menu"
+          v-bind:class="menuCheckboxClass(x)" 
+          v-on:click="menuCheckbox(x.value)" 
+          v-on:mouseover="x.show = true"
+          v-on:mouseout="x.show = false"
+        >
+          <i class="fas" v-bind:class=" x.icon " v-bind:style="{
+            'text-indent': menuTargetType ? '10px' : '',
+            'text-align': menuTargetType ? '' : 'center',
+            'color': x.show ? '#fff' : ''
+          }"></i>
+          <span v-show="menuSpanType" v-bind:style="{
+            opacity: menuTargetType ? 1 : 0                                      
+          }">{{ x.name }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

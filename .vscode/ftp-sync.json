@@ -1,0 +1,24 @@
+{
+    "remotePath": "/root/package/webrtc-mcu",
+    "host": "106.15.66.51",
+    "username": "root",
+    "password": "Rsmt@1234",
+    "port": 22,
+    "secure": false,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ],
+    "generatedFiles": {
+        "uploadOnSave": false,
+        "extensionsToInclude": [],
+        "path": ""
+    }
+}

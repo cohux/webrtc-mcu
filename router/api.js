@@ -7,7 +7,7 @@
 
 
 /**
- * 页面路由
+ * 开放API服务
  * @private
  */
 
@@ -24,24 +24,14 @@ const router = express.Router()
 
 
 /**
- * 登录
+ * 鉴权中间件
  * @private
  */
-router.get("/login", async function (req, res) {
-  res.view("login.html")
-})
-
-
-/**
- * 视图路由
- * @private
- */
-router.get("/:model", async function (req, res) {
+router.use(async function (req, res, next) {
   try {
-    assert.equal(req.userLogin, true)
-    res.render("index", { model: req.params.model, user: req.userData, hostname: req.configure.http.host })
+    
   } catch (error) {
-    res.redirect("/view/login")
+    res.send({ Status: 404, Error: error.message })
   }
 })
 

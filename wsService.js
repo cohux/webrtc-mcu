@@ -28,10 +28,11 @@ const querystring = require("querystring")
  * @private
  */
 let EventEmitters = new EventEmitter()
+let dbServices = {}
 
 
 /**
- * tcp server 类.
+ * websocket 类.
  * @private
  */
 class wsService {
@@ -42,6 +43,7 @@ class wsService {
     this.include = include
     this.dirname = dirname
     this.websocket = websocket
+    dbServices = dbService
     this.websocket.on("connection", function (socket, req) {
       wsService.connection(inthis, socket, req)
     })
@@ -68,12 +70,12 @@ class wsService {
    */
   async data (message, auth, socket) {
     let dbService = this.dbService
+    let {
+      remoteAddress,
+      remoteFamily,
+      remotePort
+    } = socket._socket
     try {
-      let {
-        remoteAddress,
-        remoteFamily,
-        remotePort
-      } = socket._socket
       let parms = JSON.parse(message)
       assert.deepEqual("event" in parms && "message" in parms, true, "数据不符合标准")
       
@@ -88,7 +90,21 @@ class wsService {
          * @private
          */
         if (parms.event === "systemInfo") {
-          await this.dbService.RedisClient.set("systemInfo", JSON.stringify(parms.message))
+          let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
+          systemInfo = JSON.parse(systemInfo)
+          parms.message.remoteAddress = remoteAddress
+          if (Array.isArray(systemInfo)) {
+            for (let i = 0; i < systemInfo.length; i ++) {
+              if (systemInfo[i].hostname === parms.message.hostname) {
+                systemInfo[i] = parms.message
+                break
+              }
+            }
+          } else {
+            systemInfo = []
+            systemInfo.push(parms.message)
+          }
+          await this.dbService.RedisClient.set("systemInfo", JSON.stringify(systemInfo))
         } else {
           return
         }
@@ -107,9 +123,10 @@ class wsService {
         if (parms.event === "systemInfo") {
           let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
           assert.deepEqual(systemInfo !== null && systemInfo !== undefined, true, "无法获取系统数据")
+          systemInfo = JSON.parse(systemInfo)
           wsService.send(socket, {
             event: "systemInfo",
-            message: JSON.parse(systemInfo)
+            message: systemInfo
           })
         } else {
           return
@@ -132,8 +149,7 @@ class wsService {
        * 如果是节点，记录错误信息.
        * @private
        */
-      auth.type === "cluster" && EventEmitters.emit("error", {
-        inprotype: true,
+      auth.type === "cluster" && EventEmitters.emit("info", {
         event: "节点[ " + remoteAddress + " ]数据解析错误",
         message: JSON.stringify({
           remoteAddress,
@@ -149,22 +165,32 @@ class wsService {
    * 连接关闭.
    * @private
    */
-  close (auth) {
+  async close (auth) {
     if (auth.type === "cluster") {
       let {
         remoteAddress,
         remoteFamily,
         remotePort
       } = auth
-      EventEmitters.emit("error", {
-        inprotype: true,
-        event: "节点[ " + remoteAddress + " ]断开连接",
-        message: JSON.stringify({
-          remoteAddress,
-          remoteFamily,
-          remotePort
+      try {
+        let cluster = await this.dbService.MongoDBClient.cluster.findOne({ remoteAddress })
+        assert.equal(cluster !== null && cluster !== undefined, true)
+        delete cluster._id
+        cluster.type = false
+        let updateCluster = await this.dbService.MongoDBClient.cluster.updateOne({ remoteAddress }, { $set: cluster })
+        assert.equal(updateCluster.result.n, 1)
+        EventEmitters.emit("error", {
+          inprotype: true,
+          event: "节点[ " + remoteAddress + " ]断开连接",
+          message: JSON.stringify({
+            remoteAddress,
+            remoteFamily,
+            remotePort
+          })
         })
-      })
+      } catch (error) {
+        return
+      }
     }
   }
   
@@ -201,7 +227,7 @@ class wsService {
         let user = await this.dbService.RedisClient.Get(String(username))
         user = JSON.parse(user)
         assert.deepEqual(user !== null && user !== undefined, true, "没有找到用户")
-        assert.deepEqual(username === user.username && password === user.DecryptKey, true, "未通过鉴权")
+        assert.deepEqual(username === user.username && password === user.decryptKey, true, "未通过鉴权")
         callback({
           type: "web",
           token: user,
@@ -218,6 +244,10 @@ class wsService {
          */
         let cluster = await this.dbService.MongoDBClient.cluster.findOne({ remoteAddress })
         assert.deepEqual(cluster !== null && cluster !== undefined, true, "未通过鉴权")
+        delete cluster._id
+        cluster.type = true
+        let updateCluster = await this.dbService.MongoDBClient.cluster.updateOne({ remoteAddress }, { $set: cluster })
+        assert.deepEqual(updateCluster.result.n, 1, "未通过鉴权")
         callback({
           type: "cluster",
           token: cluster,

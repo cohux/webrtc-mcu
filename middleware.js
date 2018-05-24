@@ -32,6 +32,7 @@ let include
 let configure
 let dirname
 let dbService
+let mcuApiServices
 let EventEmitters = new EventEmitter()
 
 
@@ -40,11 +41,12 @@ let EventEmitters = new EventEmitter()
  * @private
  */
 class middleware {
-  constructor (includes, dbServices, configures, dirnames) {
+  constructor (includes, dbServices, configures, dirnames, mcuApiService) {
     include = includes
     configure = configures
     dirname = dirnames
     dbService = dbServices
+    mcuApiServices = mcuApiService
   }
 
   /**
@@ -63,6 +65,8 @@ class middleware {
     req.include = include
     req.mongodb = dbService.MongoDBClient
     req.redis = dbService.RedisClient
+    req.afflux = mcuApiServices.afflux
+    req.apiAuth = mcuApiServices.auth
     
     /**
      * 判断是否为移动设备
@@ -112,12 +116,17 @@ class middleware {
      * @private
      */
     try {
+      let { username, password } = req.cookies
       let { views } = req.session
+      assert.equal(username !== undefined && username !== null, true)
+      assert.equal(password !== undefined && password !== null, true)
       assert.equal(views !== undefined && views !== null, true)
       let data = await dbService.RedisClient.Get(views)
       assert.equal(data !== undefined, true)
       let user = JSON.parse(data)
       assert.equal(user["username"], views)
+      assert.equal(user["username"], username)
+      assert.equal(user["decryptKey"], password)
       req.userData = user
       req.userLogin = true
     } catch (error) {
@@ -129,6 +138,23 @@ class middleware {
      * @private
      */
     next()
+  }
+  
+  /**
+   * 错误处理绑定
+   * @private
+   */
+  async error (error, req, res, next) {
+    
+    /**
+     * 处理文件和非文件
+     * @private
+     */
+    if (req.path.search(/^((?!\.).)*$/) > 0) {
+      res.sendFile(path.join(configure.http.views, "404.html"))
+    } else {
+      res.sendStatus(404)
+    }
   }
   
   /**

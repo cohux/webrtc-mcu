@@ -29,14 +29,19 @@ const middleware = require("./middleware")
 const dbService = require("./dbService")
 const wsService = require("./wsService")
 const logService = require("./logService")
+const loopService = require("./loopService")
+const mcuApiService = require("./mcuApiService")
+const router = require("./router")
 const server = http.createServer(app)
 const websocket = new ws.Server({ server })
 const dbServices = new dbService(configure)
 const includes = new include(configure)
 const dbConnection = dbServices.connection()
-const middlewares = new middleware(includes, dbConnection, configure, __dirname)
+const mcuApiServices = new mcuApiService(includes, dbServices, configure)
+const middlewares = new middleware(includes, dbConnection, configure, __dirname, mcuApiServices)
 const wsServices = new wsService(includes, dbConnection, configure, __dirname, websocket)
 const logServices = new logService(includes, dbConnection, configure)
+const loopServices = new loopService(includes, dbConnection, configure, __dirname)
 
 
 /**
@@ -51,23 +56,14 @@ app.use(cookieParser())
 app.set("views", configure.http.views)
 app.set("view engine", "html")
 app.engine(".html", ejs.__express)
-
-
-/**
- * 路由模块
- * @private
- */
 app.use("/public", express.static(configure.http.public))
-app.use([/^((?!\.).)*$/, "/useJs"], middlewares.filter)
-app.use("/", require("./router/root"))
-app.use("/view", require("./router/view"))
-app.use("/auth", require("./router/auth"))
-app.use("/log", require("./router/log"))
+app.use("/", router(middlewares))
 
 
 /**
- * start service.
+ * 初始化服务.
  * @private
  */
+loopServices.heapMaintain()
 server.listen(configure.http.port)
-logServices.bind([ wsServices, dbServices, middlewares ])
+logServices.bind([ wsServices, dbServices, middlewares, loopServices ])

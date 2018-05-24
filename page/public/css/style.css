@@ -5,11 +5,19 @@
   font-size: 14px;
 }
 
+body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
 a {
   text-decoration:none;
 }
 
-input {
+input, select {
   outline: none;
 }
 
@@ -37,7 +45,6 @@ button, .mhover {
   position: fixed;
   top: 49px;
   left: 0;
-  height: 100%;
   background-color: #333744;
   color: #fff;
 }
@@ -53,13 +60,23 @@ button, .mhover {
   padding: 5px 0;
 }
 
+.menu .menu-ul .menu-title {
+  text-indent: 10px;
+  background-color: #42485b;
+  padding: 15px 0;
+}
+
+.menu .menu-ul .menu-title i {
+  margin-right: 15px;
+}
+
 .menu .menu-target:hover {
   color: #fff;
 }
 
 .menu .menu-ul .menu-li {
   text-indent: 10px;
-  background-color: #42485b;
+  background-color: #383838;
   padding: 15px 0;
 }
 
@@ -67,7 +84,7 @@ button, .mhover {
   background-color: #0c9cf8;
 }
 
-.menu .menu-ul .menu-li:hover {
+.menu .menu-ul .menu-li:hover, .menu .menu-ul .menu-title:hover {
   background-color: #5d6273;
 }
 
@@ -85,10 +102,10 @@ button, .mhover {
   position: fixed;
   right: 0;
   top: 50px;
-  height: 100%;
   overflow-y: auto;
   padding: 0 20px;
   padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .row-top {
@@ -137,11 +154,6 @@ button, .mhover {
   padding: 10px 0;
 }
 
-.list .list-ul .list-text-left span {
-  text-align: left;
-  text-indent: 15px;
-}
-
 .list .list-ul .list-break {
   border-right: 1px solid #ddd;
 }
@@ -156,6 +168,10 @@ button, .mhover {
   height: 100%;
   top: 0;
   left: 0;
+}
+
+.list .list-ul .list-i .list-edit-i {
+  margin: 0 10px;
 }
 
 .list .list-ul .list-i .list-progress .list-progress-rate {
@@ -230,4 +246,148 @@ header .information .bell, header .information .user {
 
 header .information .bell {
   margin-right: 30px;
+}
+
+.operating {
+  position: relative;
+  height: 40px;
+}
+
+.operating .page {
+  position: absolute;
+  left: 15px;
+  top: 0;
+}
+
+.operating .page select {
+  height: 2em;
+  border: 1px solid #ddd;
+  color: #555;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.operating .buttom {
+  position: absolute;
+  right: 15px;
+  top: 0;
+}
+
+.modaltor {
+  display: block;
+  position: relative;
+  padding-top: 10px;
+}
+
+.modaltor .modaltor-title {
+  margin: 10px 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+.modaltor .modaltor-title span {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #555;
+}
+
+.modaltor .modaltor-body {
+  padding: 40px 0;
+}
+
+.modaltor .modaltor-buttom {
+  margin: 10px 15px;
+  border-top: 2px solid #eee;
+  padding-top: 30px;
+  text-align: right;
+}
+
+.modaltor .modaltor-buttom button {
+  margin-left: 15px;
+}
+
+.modaltor .modaltor-body .modaltor-i {
+  margin-bottom: 5px;
+}
+
+.modaltor .modaltor-body .modaltor-i .modaltor-i-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.modaltor .modaltor-body .modaltor-i .modaltor-i-body .modaltor-i-body-i {
+  margin-bottom: 5px;
+}
+
+.modaltor .modaltor-body .modaltor-i .modaltor-ifrom-ul {
+  text-align: right;
+}
+
+.modaltor .modaltor-body .modaltor-i .modaltor-ifrom-ul-checkbox {
+  position: relative;
+  top: 0.4em;
+}
+
+.modaltor .modaltor-body .modaltor-ul {
+  display: block;
+  position: relative;
+}
+
+.modaltor .modaltor-body .modaltor-ul-title {
+  line-height: 3em;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.modaltor .modaltor-body .modaltor-ul .modaltor-ul-body {
+  margin-top: 10px;
+}
+
+.modaltor .modaltor-body .modaltor-ul .modaltor-ul-body .row {
+  line-height: 2.2em;
+  position: relative;
+}
+
+.modaltor .modaltor-body .modaltor-ul .modaltor-ul-body .row .close {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  font-size: 1em;
+  z-index: 100;
+}
+
+.modaltor .modaltor-body .modaltor-info {
+  margin-top: 10px;
+}
+
+.console-top-info {
+  padding: 15px;
+  display: flex;
+}
+
+.console-top-info i {
+  font-size: 2em;
+  color: #999;
+  margin-left: 10px;
+}
+
+.console-top-info * {
+  width: 33.33%;
+}
+
+.console-top-info p {
+  margin-bottom: 0;
+  color: #0c9cf8;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: right;
+}
+
+.console-top-info span {
+  color: #999;
+  font-size: 0.8em;
+  text-align: right;
+  font-weight: bold;
 }

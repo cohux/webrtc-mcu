@@ -1,0 +1,378 @@
+<!-- 
+  系统信息. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            系统信息
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>IP地址</span>
+              </b-col>
+              <b-col>
+                <span>主机名</span>
+              </b-col>
+              <b-col>
+                <span>操作系统</span>
+              </b-col>
+              <b-col>
+                <span>CPU架构</span>
+              </b-col>
+              <b-col>
+                <span>CPU核心数</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ server.remoteAddress }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.hostname }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.type }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.arch }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cups }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  负载信息. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            负载信息
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>1分钟</span>
+              </b-col>
+              <b-col>
+                <span>5分钟</span>
+              </b-col>
+              <b-col>
+                <span>15分钟</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ server.loadavg[0] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.loadavg[1] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.loadavg[2] }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  运行信息. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            节点运行状况
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>运行时间</span>
+              </b-col>
+              <b-col>
+                <span>空闲内存</span>
+              </b-col>
+              <b-col>
+                <span>总内存</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ server.uptime }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.freemem }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.totalmem }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  CPU. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            CPU
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>us</span>
+              </b-col>
+              <b-col>
+                <span>sy</span>
+              </b-col>
+              <b-col>
+                <span>ni</span>
+              </b-col>
+              <b-col>
+                <span>id</span>
+              </b-col>
+              <b-col>
+                <span>wa</span>
+              </b-col>
+              <b-col>
+                <span>hi</span>
+              </b-col>
+              <b-col>
+                <span>si</span>
+              </b-col>
+              <b-col>
+                <span>st</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ server.cpu[0] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[1] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[2] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[3] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[4] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[5] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[6] }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.cpu[7] }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  网络流量. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            网络流量
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>id</span>
+              </b-col>
+              <b-col>
+                <span>name</span>
+              </b-col>
+              <b-col>
+                <span>receive</span>
+              </b-col>
+              <b-col>
+                <span>transmit</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>node</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.node.name }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.node.receive }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.node.transmit }}</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover">
+            <b-row>
+              <b-col class="list-value">
+                <span>domain</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.domain.name }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.domain.receive }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ server.network.domain.transmit }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  网络接口. 
+-->
+<b-container class="bv-example-row row-top" fluid v-for="(value, key) in server.networkInterfaces">
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            网络接口 ( {{ key }} ) 
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-li">
+            <b-row>
+              <b-col>
+                <span>address</span>
+              </b-col>
+              <b-col>
+                <span>netmask</span>
+              </b-col>
+              <b-col>
+                <span>family</span>
+              </b-col>
+              <b-col>
+                <span>mac</span>
+              </b-col>
+              <b-col>
+                <span>internal</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-hover" v-for="x of value">
+            <b-row>
+              <b-col class="list-value">
+                <span>{{ x.address }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ x.netmask }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ x.family }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ x.mac }}</span>
+              </b-col>
+              <b-col class="list-value">
+                <span>{{ x.internal }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>
+<!-- 
+  监听端口. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-server"></i>
+            监听端口
+          </span>
+        </div>
+        <div class="list-ul">
+          <div class="list-i list-hover" v-for="v of server.network.listenList">
+            <b-row>
+              <b-col class="list-value" cols="10">
+                <span style="
+                  white-space: pre-wrap;
+                  text-align: left;
+                  text-indent: 15px;
+                  font-family: Courier New;
+                  font-weight: bold;
+                ">{{ v }}</span>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>

@@ -20,7 +20,7 @@
     <b-col>
       <div class="v-shadow console-top-info">
         <i class="fas fa-exclamation"></i>
-        <p>{{ information.error }}</p>
+        <p>{{ bell }}</p>
         <span>服务警报</span>
       </div>
     </b-col>
@@ -82,7 +82,7 @@
                 <div class="list-progress">
                   <div class="list-progress-rate">
                     <div class="list-progress-rate-i" v-bind:style="{
-                      'width': v.cpu + '%',
+                      'width': (v.cpu > 100 ? 100 : v.cpu) + '%',
                       'background-color': v.cpu > 90 ? '#f00222' : '#0c9cf8'                                   
                     }"></div>
                   </div>
@@ -92,7 +92,7 @@
                 <div class="list-progress">
                   <div class="list-progress-rate">
                     <div class="list-progress-rate-i" v-bind:style="{
-                      'width': v.monery + '%',
+                      'width': (v.monery > 100 ? 100 : v.monery) + '%',
                       'background-color': v.monery > 90 ? '#f00222' : '#0c9cf8'                                   
                     }"></div>
                   </div>
@@ -102,7 +102,7 @@
                 <div class="list-progress">
                   <div class="list-progress-rate">
                     <div class="list-progress-rate-i" v-bind:style="{
-                      'width': v.io + '%',
+                      'width': (v.io > 100 ? 100 : v.io) + '%',
                       'background-color': v.io > 90 ? '#f00222' : '#0c9cf8'                                   
                     }"></div>
                   </div>
@@ -112,17 +112,17 @@
                 <div class="list-progress">
                   <div class="list-progress-rate">
                     <div class="list-progress-rate-i" v-bind:style="{
-                      'width': v.network + '%',
+                      'width': (v.network > 100 ? 100 : v.network) + '%',
                       'background-color': v.network > 90 ? '#f00222' : '#0c9cf8'                                   
                     }"></div>
                   </div>
                 </div>
               </b-col>
               <b-col class="list-value">
-                <span>{{ v.user }}</span>
+                <span>{{ v.user || '0' }}</span>
               </b-col>
               <b-col class="list-value">
-                <span>{{ v.room }}</span>
+                <span>{{ v.room || '0' }}</span>
               </b-col>
             </b-row>
           </div>
@@ -159,12 +159,17 @@
               </b-col>
             </b-row>
           </div>
+          <div class="list-i" v-show="event.length === 0">
+            <b-row>
+              <b-col>
+                <span>无结果</span>
+              </b-col>
+            </b-row>
+          </div>
           <div class="list-i list-text-left list-hover" v-for="v of event">
             <b-row>
               <b-col class="list-value" cols="2">
-                <span style="
-                  text-indent: 0.5em;
-                ">
+                <span>
                   <i v-if="v.type === 'info' " class="fas fa-asterisk" style="
                     margin-right: 10px;
                     color: #00b150;

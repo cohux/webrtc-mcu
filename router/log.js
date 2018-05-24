@@ -29,9 +29,9 @@ const router = express.Router()
  */
 router.get("/getAll", async function (req, res) {
   try {
-    let { skip = 1 } = req.query
+    let { page = 1 } = req.query
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    let Data = await req.mongodb.log.find().limit(20).skip((skip - 1) * 20).toArray()
+    let Data = await req.mongodb.log.find().limit(20).skip((Number(page) - 1) * 20).toArray()
     res.send({ Status: 200, Data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -45,12 +45,12 @@ router.get("/getAll", async function (req, res) {
  */
 router.get("/getError", async function (req, res) {
   try {
-    let { skip = 1 } = req.query
+    let { page = 1 } = req.query
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let Data = await req.mongodb.log.find({ 
       type: "error",
       read: false
-    }).limit(20).skip((skip - 1) * 20).toArray()
+    }).limit(20).skip((Number(page) - 1) * 20).toArray()
     res.send({ Status: 200, Data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })

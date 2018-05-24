@@ -38,39 +38,30 @@ Read(function (exports) {
        * 下一步
        * @private
        */
-      next: function () {
-        if (this.module === "name") {
-          username = vueApp.input
-          axios.post("/auth/verificationUserName", {
-            username: vueApp.input
-          }).then(function(r) {
-            if (r.status === 200 && r.data.Status == 200) {
-              vueApp.input = ""
-              vueApp.inputPlaceholder = "请输入密码"
-              vueApp.inputType = "password"
-              vueApp.button = "登录"
-              vueApp.module = "pass"
-              vueApp.type = "输入密码"
-              vueApp.block = true
-              vueApp.username = username
-            } else {
-              exports.Print("Error", r.data.Error)
-            }
-          })
-        } else
-        if (this.module === "pass") {
-          axios.post("/auth/login", {
-            username: username,
-            password: vueApp.input
-          }).then(function(r) {
-            if (r.status === 200 && r.data.Status == 200) {
-              location.href = "/view/console"
-            } else {
-              exports.Print("Error", r.data.Error)
-            }
-          })
-        } else {
-          return
+      next: async function () {
+        try {
+          if (this.module === "name") {
+            username = vueApp.input
+            let login = await axios.post("/auth/verificationUserName", { username: vueApp.input })
+            exports.assert(login.data.Status, 200, login.data.Error || "")
+            vueApp.input = ""
+            vueApp.inputPlaceholder = "请输入密码"
+            vueApp.inputType = "password"
+            vueApp.button = "登录"
+            vueApp.module = "pass"
+            vueApp.type = "输入密码"
+            vueApp.block = true
+            vueApp.username = username
+          } else
+          if (this.module === "pass") {
+            let login = await axios.post("/auth/login", { username: username, password: vueApp.input })
+            exports.assert(login.data.Status, 200, login.data.Error || "")
+            location.href = "/view/console"
+          } else {
+            return
+          }
+        } catch (error) {
+          exports.Print("Error", error.message)
         }
       },
 
