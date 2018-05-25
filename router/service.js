@@ -33,7 +33,7 @@ router.post("/getService", async function (req, res) {
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let cluster = await req.mongodb.cluster.findOne({ remoteAddress })
     assert.deepEqual(cluster !== null && cluster !== undefined, true, "未找到该节点")
-    let data = await req.afflux({ method: "GET", cluster, path: "/services" })
+    let data = await req.api.afflux({ method: "GET", cluster, path: "/services" })
     res.send({ Status: 200, Data: data.data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -51,7 +51,7 @@ router.post("/deleteService", async function (req, res) {
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let cluster = await req.mongodb.cluster.findOne({ remoteAddress })
     assert.deepEqual(cluster !== null && cluster !== undefined, true, "未找到该节点")
-    let data = await req.afflux({ method: "DELETE", cluster, path: "/services/" + id })
+    let data = await req.api.afflux({ method: "DELETE", cluster, path: "/services/" + id })
     res.send({ Status: 200, Data: data.data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -69,7 +69,7 @@ router.post("/addService", async function (req, res) {
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let cluster = await req.mongodb.cluster.findOne({ remoteAddress })
     assert.deepEqual(cluster !== null && cluster !== undefined, true, "未找到该节点")
-    let data = await req.afflux({ data: { key, name }, method: "POST", cluster, path: "/services" })
+    let data = await req.api.afflux({ data: { key, name }, method: "POST", cluster, path: "/services" })
     res.send({ Status: 200, Data: data.data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
