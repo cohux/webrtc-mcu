@@ -9,18 +9,20 @@ Create high-performance, reliable, and scalable real-time communication solution
 
 ## Module dependencies
 
-* [arguments.type](https://github.com/xivistudios/arguments.type).
-* [axios](https://github.com/axios/axios).
-* [body-parser](https://github.com/expressjs/body-parser).
-* [cookie-parser](https://github.com/expressjs/cookie-parser).
-* [cookie-session](https://github.com/expressjs/cookie-session).
-* [ejs](https://github.com/tj/ejs).
-* [express](https://github.com/expressjs/express).
-* [mongodb](https://github.com/mongodb/node-mongodb-native).
-* [nodemailer](https://github.com/nodemailer/nodemailer).
-* [redis](https://github.com/NodeRedis/node_redis).
-* [toml](https://github.com/BinaryMuse/toml-node).
-* [ws](https://github.com/websockets/ws).
+* [arguments.type](https://github.com/xivistudios/arguments.type)
+* [axios](https://github.com/axios/axios)
+* [body-parser](https://github.com/expressjs/body-parser)
+* [cookie-parser](https://github.com/expressjs/cookie-parser)
+* [cookie-session](https://github.com/expressjs/cookie-session)
+* [ejs](https://github.com/tj/ejs)
+* [express](https://github.com/expressjs/express)
+* [mongodb](https://github.com/mongodb/node-mongodb-native)
+* [nodemailer](https://github.com/nodemailer/nodemailer)
+* [redis](https://github.com/NodeRedis/node_redis)
+* [toml](https://github.com/BinaryMuse/toml-node)
+* [ws](https://github.com/websockets/ws)
+* [uuid](https://github.com/kelektiv/node-uuid)
+* [http-proxy](https://github.com/nodejitsu/node-http-proxy)
 
 ## About
 
@@ -131,13 +133,13 @@ next.
 Start this Service.
 
 ```console
-~ node index.js
+~ node mcu.js
 ```
 
 or use pm2
 
 ```console
-~ pm2 start index.js -i auto
+~ pm2 start mcu.js -i auto
 ```
 
 Now please start enjoying!
@@ -170,24 +172,13 @@ Now please start enjoying!
 ![room-edit](./src/roomeditv2.png)
 
 
-## MIT License
+## Supplementary explanation
+
+This service is still in the testing phase, so you must be responsible for the loss of data and other system losses caused by unknown problems.
+
+
+## License
+
+[MIT](./LICENSE)
 
 Copyright (c) 2018 Mr.Panda.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
