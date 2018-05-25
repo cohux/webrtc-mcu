@@ -391,3 +391,10 @@ header .information .bell {
   text-align: right;
   font-weight: bold;
 }
+
+.key-chex {
+  position: relative;
+  margin-top: -1em;
+  top: 0.4em;
+  margin-left: 5px;
+}
