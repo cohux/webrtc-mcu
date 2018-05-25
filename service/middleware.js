@@ -33,6 +33,7 @@ let configure
 let dirname
 let dbService
 let mcuApiServices
+let eventEmitters
 let EventEmitters = new EventEmitter()
 
 
@@ -41,12 +42,13 @@ let EventEmitters = new EventEmitter()
  * @private
  */
 class middleware {
-  constructor (includes, dbServices, configures, dirnames, mcuApiService) {
+  constructor (includes, dbServices, configures, dirnames, mcuApiService, eventEmitter) {
     include = includes
     configure = configures
     dirname = dirnames
     dbService = dbServices
     mcuApiServices = mcuApiService
+    eventEmitters = eventEmitter
   }
 
   /**
@@ -65,8 +67,7 @@ class middleware {
     req.include = include
     req.mongodb = dbService.MongoDBClient
     req.redis = dbService.RedisClient
-    req.afflux = mcuApiServices.afflux
-    req.apiAuth = mcuApiServices.auth
+    req.api = mcuApiServices
     
     /**
      * 判断是否为移动设备
@@ -109,6 +110,14 @@ class middleware {
      */
     req.info = function (event, message) {
       EventEmitters.emit("info", { event, message })
+    }
+    
+    /**
+     * 关闭 WebSocket
+     * @private
+     */
+    req.closeWebSocket = function (remoteAddress) {
+      eventEmitters.emit("closeWebSocket", { remoteAddress })
     }
 
     /**
