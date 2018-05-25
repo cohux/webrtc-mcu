@@ -33,7 +33,9 @@ Read(async function (exports) {
         {title: "网络带宽", input: "", name: "maxNetwork", placeholder: "服务器对外网络带宽(byte)"},
         {title: "监控端口", input: "", name: "bindPort", placeholder: "节点需要监控的端口列表，多个以 (,) 分割"},
         {title: "服务ID", input: "", name: "auth.id", placeholder: "MCU超级服务ID"},
-        {title: "服务KEY", input: "", name: "auth.key", placeholder: "MCU超级服务KEY"}
+        {title: "服务KEY", input: "", name: "auth.key", placeholder: "MCU超级服务KEY"},
+        {title: "MCU API接口协议", input: "", name: "api.protocol", placeholder: "HTTP OR HTTPS"},
+        {title: "MCU API接口端口号", input: "", name: "api.port", placeholder: "API接口端口号"}
       ],
       view: false,
       servicesName: "",
@@ -83,6 +85,12 @@ Read(async function (exports) {
           } else
           if (this.form[i].name === "auth.key") {
             this.form[i].input = data.auth.key
+          } else
+          if (this.form[i].name === "api.protocol") {
+            this.form[i].input = data.api.protocol
+          } else
+          if (this.form[i].name === "api.port") {
+            this.form[i].input = data.api.port
           } else {
             this.form[i].input = data[this.form[i].name]
           }
@@ -127,7 +135,7 @@ Read(async function (exports) {
        */
       modaltorSubmit: async function () {
         try {
-          let from = { auth: {} }
+          let from = { auth: {}, api: {} }
           for (let v of this.form) {
             if (v.name === "auth.id") {
               from.auth.id = v.input
@@ -137,6 +145,12 @@ Read(async function (exports) {
             } else 
             if (v.name === "bindPort") {
               from[v.name] = v.input.toString()
+            } else 
+            if (v.name === "api.protocol") {
+              from.api.protocol = v.input
+            } else
+            if (v.name === "api.port") {
+              from.api.port = v.input
             } else {
               from[v.name] = v.input
             }
@@ -217,9 +231,10 @@ Read(async function (exports) {
    * 调整窗口大小
    * @private
    */
-  document.body.addEventListener("resize", function () {
+  document.body.onresize = function () {
     let width = document.documentElement.offsetWidth
     let height = document.body.offsetHeight
+    vueApp.windowHeight = height - 49
     if (width < 1300) {
       vueApp.menuTargetType = false
       vueApp.menuSpanType = false
@@ -230,7 +245,7 @@ Read(async function (exports) {
       vueApp.menuSpanType = true
       vueApp.windowWidth = width - 200
     }
-  })
+  }
   
   /**
    * 展开窗口
