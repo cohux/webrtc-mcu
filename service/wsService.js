@@ -29,6 +29,7 @@ const querystring = require("querystring")
  */
 let EventEmitters = new EventEmitter()
 let dbServices = {}
+let socketListenLoop = {}
 
 
 /**
@@ -36,19 +37,69 @@ let dbServices = {}
  * @private
  */
 class wsService {
-  constructor (include, dbService, configure, dirname, websocket) {
+  constructor (include, dbService, configure, dirname, websocket, eventEmitters) {
+    dbServices = dbService
     let inthis = this
     this.dbService = dbService
     this.configure = configure
     this.include = include
     this.dirname = dirname
     this.websocket = websocket
-    dbServices = dbService
+    this.eventEmitters = eventEmitters
+    
+    /**
+     * websocket 连接.
+     * @private
+     */
     this.websocket.on("connection", function (socket, req) {
       wsService.connection(inthis, socket, req)
     })
+    
+    /**
+     * websocket 错误.
+     * @private
+     */
     this.websocket.on("error", function (error) {
       EventEmitters.emit("error", error)
+    })
+    
+    /**
+     * 主动关闭websocket.
+     * @private
+     */
+    this.eventEmitters.on("closeWebSocket", async function (data) {
+      try {
+        let { remoteAddress } = data
+        
+        /**
+         * 删除节点信息.
+         * @private
+         */
+        try {
+          let list = []
+          let clusterList = await dbService.RedisClient.Get("systemInfo")
+          assert.equal(clusterList !== null && clusterList !== undefined, true)
+          clusterList = JSON.parse(clusterList)
+          assert.equal(Array.isArray(clusterList), true)
+          for (let v of clusterList) {
+            v.remoteAddress !== remoteAddress && list.push(v)
+          }
+          dbService.RedisClient.set("systemInfo", JSON.stringify(list))
+        } catch (error) {
+          return
+        }
+        
+        /**
+         * 关闭socket并删除连接池.
+         * @private
+         */
+        if (remoteAddress in socketListenLoop) {
+          socketListenLoop[remoteAddress].terminate()
+          delete socketListenLoop[remoteAddress]
+        }
+      } catch (error) {
+        return
+      }
     })
   }
   
@@ -76,6 +127,7 @@ class wsService {
       remotePort
     } = socket._socket
     try {
+      remoteAddress = remoteAddress.match(/[\d.]+/g)[0]
       let parms = JSON.parse(message)
       assert.deepEqual("event" in parms && "message" in parms, true, "数据不符合标准")
       
@@ -93,7 +145,7 @@ class wsService {
           let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
           systemInfo = JSON.parse(systemInfo)
           parms.message.remoteAddress = remoteAddress
-          if (Array.isArray(systemInfo)) {
+          if (Array.isArray(systemInfo) && systemInfo.length > 0) {
             for (let i = 0; i < systemInfo.length; i ++) {
               if (systemInfo[i].hostname === parms.message.hostname) {
                 systemInfo[i] = parms.message
@@ -173,12 +225,22 @@ class wsService {
         remotePort
       } = auth
       try {
+        
+        /**
+         * 连接关闭  更新数据库状态为断线.
+         * @private
+         */
         let cluster = await this.dbService.MongoDBClient.cluster.findOne({ remoteAddress })
         assert.equal(cluster !== null && cluster !== undefined, true)
         delete cluster._id
         cluster.type = false
         let updateCluster = await this.dbService.MongoDBClient.cluster.updateOne({ remoteAddress }, { $set: cluster })
         assert.equal(updateCluster.result.n, 1)
+        
+        /**
+         * 发送错误日志.
+         * @private
+         */
         EventEmitters.emit("error", {
           inprotype: true,
           event: "节点[ " + remoteAddress + " ]断开连接",
@@ -188,6 +250,13 @@ class wsService {
             remotePort
           })
         })
+        
+        /**
+         * 从连接池删除.
+         * @private
+         */
+        delete socketListenLoop[remoteAddress]
+        this.eventEmitters.emit("closeWebSocket", { remoteAddress })
       } catch (error) {
         return
       }
@@ -208,6 +277,7 @@ class wsService {
       remotePort
     } = req.socket
     try {
+      remoteAddress = remoteAddress.match(/[\d.]+/g)[0]
       
       /**
        * websocket路由过滤.
@@ -248,6 +318,7 @@ class wsService {
         cluster.type = true
         let updateCluster = await this.dbService.MongoDBClient.cluster.updateOne({ remoteAddress }, { $set: cluster })
         assert.deepEqual(updateCluster.result.n, 1, "未通过鉴权")
+        socketListenLoop[remoteAddress] = socket
         callback({
           type: "cluster",
           token: cluster,
@@ -264,7 +335,6 @@ class wsService {
         throw new Error("访问未允许")
       }
     } catch (error) {
-      console.log(error)
       
       /**
        * 发送给客户端错误信息.
