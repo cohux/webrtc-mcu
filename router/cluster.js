@@ -66,6 +66,7 @@ router.post("/delService", async function (req, res) {
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let delService = await req.mongodb.cluster.deleteOne({ remoteAddress })
     assert.deepEqual(delService.result.n, 1, "删除失败")
+    req.closeWebSocket(remoteAddress)
     res.send({ Status: 200 })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -79,17 +80,15 @@ router.post("/delService", async function (req, res) {
  */
 router.post("/updateService", async function (req, res) {
   try {
-    let { 
-      _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork
-    } = req.body
+    let { _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } = req.body
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let service = await req.mongodb.cluster.findOne({ _id: req.ojectID.createFromHexString(_id) })
     assert.deepEqual(service !== null && service !== undefined, true, "未找到数据")
     let updateService = await req.mongodb.cluster.updateOne({ _id: req.ojectID.createFromHexString(_id) }, { $set: {
-      remoteAddress, bindPort, anotherName, type, auth, maxNetwork
+      remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api
     } })
     assert.deepEqual(updateService.result.n, 1, "更新失败")
-    res.send({ Status: 200, Data: { _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork } })
+    res.send({ Status: 200, Data: { _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
   }
@@ -102,16 +101,14 @@ router.post("/updateService", async function (req, res) {
  */
 router.post("/addService", async function (req, res) {
   try {
-    let { 
-      remoteAddress, bindPort, anotherName, type, auth, maxNetwork
-    } = req.body
+    let { remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } = req.body
     assert.deepEqual(req.userLogin, true, "用户未登录")
     let service = await req.mongodb.cluster.findOne({ remoteAddress })
     assert.deepEqual(service === null || service === undefined, true, "已存在重复节点")
-    let addService = await req.mongodb.cluster.insertOne({ remoteAddress, bindPort, anotherName, type, auth, maxNetwork })
+    let addService = await req.mongodb.cluster.insertOne({ remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api })
     assert.deepEqual(addService.result.n, 1, "新建失败")
     res.send({ Status: 200, Data: { 
-      _id: addService.insertedId, remoteAddress, bindPort, anotherName, type, auth, maxNetwork 
+      _id: addService.insertedId, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api 
     } })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
