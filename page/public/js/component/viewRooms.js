@@ -625,9 +625,10 @@ Read(async function (exports) {
    * 调整窗口大小
    * @private
    */
-  document.body.addEventListener("resize", function () {
+  document.body.onresize = function () {
     let width = document.documentElement.offsetWidth
     let height = document.body.offsetHeight
+    vueApp.windowHeight = height - 49
     if (width < 1300) {
       vueApp.menuTargetType = false
       vueApp.menuSpanType = false
@@ -638,7 +639,7 @@ Read(async function (exports) {
       vueApp.menuSpanType = true
       vueApp.windowWidth = width - 200
     }
-  })
+  }
   
   /**
    * 展开窗口
