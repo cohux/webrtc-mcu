@@ -1,0 +1,636 @@
+<div class="modaltor v-shadow" style="padding: 15px;">
+  <div class="modaltor-title">
+    <span>编辑房间</span>
+  </div>
+  <div class="modaltor-body">
+    <template>
+      <b-container fluid>
+        <b-row class="modaltor-i">
+          <b-col sm="3">
+            <label>房间名</label>
+          </b-col>
+          <b-col sm="9">
+            <b-form-input type="type" v-model="form.name" placeholder="房间名"></b-form-input>
+          </b-col>
+        </b-row>
+        <b-row class="modaltor-i">
+          <b-col sm="3">
+            <label>输入限制</label>
+          </b-col>
+          <b-col sm="9">
+            <b-form-input type="type" v-model="form.inputLimit" placeholder="输入限制"></b-form-input>
+          </b-col>
+        </b-row>
+        <b-row class="modaltor-i">
+          <b-col sm="3">
+            <label>参与限制</label>
+          </b-col>
+          <b-col sm="9">
+            <b-form-input type="type" v-model="form.participantLimit" placeholder="参与限制"></b-form-input>
+          </b-col>
+        </b-row>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>角色</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row v-show="form.roles.length === 0">
+              <b-col>
+                <span>无角色</span>
+              </b-col>
+            </b-row>
+            <b-row class="modaltor-i" v-for="(v, i) of form.roles">
+              <b-col sm="3">
+                <b-form-input type="type" v-model="v.role" placeholder="角色名"></b-form-input>
+              </b-col>
+              <b-col class="modaltor-ifrom-ul">
+                <span>发布:</span>
+                <span>视频</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.publish.video"></b-form-checkbox>
+                <span>音频</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.publish.audio"></b-form-checkbox>
+              </b-col>
+              <b-col class="modaltor-ifrom-ul">
+                <span>订阅:</span>
+                <span>视频</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.subscribe.video"></b-form-checkbox>
+                <span>音频</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.subscribe.audio"></b-form-checkbox>
+              </b-col>
+              <b-col class="modaltor-ifrom-ul">
+                <i class="fas fa-times mhover" v-on:click="delRole(i)"></i>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="modaltor-info">
+            <b-button variant="success" v-on:click="addRoles">添加</b-button>
+          </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>视图</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row v-show="form.views.length === 0">
+              <b-col>
+                <span>无视图</span>
+              </b-col>
+            </b-row>
+            <b-row class="modaltor-i" v-for="(v, i) of form.views">
+              <i class="fas fa-times mhover close" v-on:click="delViews(i)"></i>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <b-form-input type="type" v-model="v.label" placeholder="视图名"></b-form-input>
+                </div>
+                <div class="modaltor-i-title">
+                  <span>音频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>格式</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.audio.fromatStr" :options="audioFormat"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>VAD</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.audio.vad"></b-form-checkbox>
+                      </b-col>
+                    </b-row>
+                  </div>
+                </div>
+                <div class="modaltor-i-title">
+                  <span>视频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>格式</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.video.fromatStr" :options="videoFormat"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>解析度</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-row>
+                          <b-col>
+                            <b-form-input type="type" v-model="v.video.parameters.resolution.width" placeholder="宽"></b-form-input>
+                          </b-col>
+                          <b-col>
+                            <b-form-input type="type" v-model="v.video.parameters.resolution.height" placeholder="高"></b-form-input>
+                          </b-col>
+                        </b-row>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>帧率</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.video.parameters.framerate" :options="framerateFormat"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>比特率</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-input type="type" v-model="v.video.parameters.bitrate" placeholder="比特率"></b-form-input>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>关键帧间隔</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.video.parameters.keyFrameInterval" :options="keyFrameIntervalFormat"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>最大输入</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-input type="type" v-model="v.video.maxInput" placeholder="最大输入"></b-form-input>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>运动因子</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-input type="type" v-model="v.video.motionFactor" placeholder="运动因子"></b-form-input>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>背景颜色</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-row>
+                          <b-col>
+                            <b-form-input type="type" v-model="v.video.bgColor.b" placeholder="B"></b-form-input>
+                          </b-col>
+                          <b-col>
+                            <b-form-input type="type" v-model="v.video.bgColor.g" placeholder="G"></b-form-input>
+                          </b-col>
+                          <b-col>
+                            <b-form-input type="type" v-model="v.video.bgColor.r" placeholder="R"></b-form-input>
+                          </b-col>
+                        </b-row>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>保持活动</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="v.video.keepActiveInputPrimary"></b-form-checkbox>
+                      </b-col>
+                    </b-row>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>布局</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>策略</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.video.layout.fitPolicy" :options="videoFitPolicy"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>模板</span>
+                      </b-col>
+                      <b-col sm="8">
+                        <b-form-select v-model="v.video.layout.templates.base" :options="videoTemplatesBase"></b-form-select>
+                      </b-col>
+                    </b-row>
+                  </div>
+                  <div class="modaltor-i-body-i">
+                    <b-row>
+                      <b-col sm="4">
+                        <span>自定义模板</span>
+                      </b-col>
+                      <b-col sm="8" style="padding-left: 30px;">
+                        <b-row v-for="(x, y) of v.video.layout.templates.custom" style="padding-left: 15px;padding-bottom: 5px;">
+                          <div v-for="k of x.region" style="position: relative;left: -15px;margin-bottom: 5px;">
+                            <b-row>
+                              <b-col>
+                                <b-form-input type="type" v-model="k.id" placeholder="ID"></b-form-input>
+                              </b-col>
+                              <b-col>
+                                <b-form-input type="type" v-model="k.area.width" placeholder="W"></b-form-input>
+                              </b-col>
+                              <b-col>
+                                <b-form-input type="type" v-model="k.area.height" placeholder="H"></b-form-input>
+                              </b-col>
+                              <b-col>
+                                <b-form-input type="type" v-model="k.area.top" placeholder="T"></b-form-input>
+                              </b-col>
+                              <b-col>
+                                <b-form-input type="type" v-model="k.area.left" placeholder="L"></b-form-input>
+                              </b-col>
+                            </b-row>
+                          </div>
+                          <b-row>
+                            <b-button variant="success" v-on:click="addRegion(i, y)">添加区域</b-button>
+                          </b-row>
+                        </b-row>
+                        <b-row>
+                          <b-button variant="success" v-on:click="addCustom(i)">添加自定义模板</b-button>
+                        </b-row>
+                      </b-col>
+                    </b-row>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="modaltor-info">
+            <b-button variant="success" v-on:click="addViews">添加</b-button>
+          </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>媒体入口</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row class="modaltor-i">
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>音频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaIn.audio.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaIn.audio" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v.codecStr" :options="audioFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delAudioMediaIn(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addAudioMediaIn">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>视频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaIn.video.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaIn.video" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v.codec" :options="videoFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delVideoMediaIn(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addVideoMediaIn">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>媒体出口</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row class="modaltor-i">
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>音频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.audio.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.audio" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v.codecStr" :options="audioFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delAudioMediaOut(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addAudioMediaOut">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>视频</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.video.format.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.video.format" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v.codec" :options="videoFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delVideoMediaOut(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addVideoMediaOut">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>解析度</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.video.parameters.resolution.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.video.parameters.resolution" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v" :options="resolutionFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delParametersResolution(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addParametersResolution">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+            <b-row class="modaltor-i">
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>帧率</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.video.parameters.framerate.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.video.parameters.framerate" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v" :options="framerateFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delParametersFramerate(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addParametersFramerate">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>比特率</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.video.parameters.bitrate.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.video.parameters.bitrate" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v" :options="bitrateFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delParametersBitrate(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addParametersBitrate">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div class="modaltor-i-title">
+                  <span>关键帧间隔</span>
+                </div>
+                <div class="modaltor-i-body">
+                  <div class="modaltor-i-body-i">
+                    <b-row v-show="form.mediaOut.video.parameters.keyFrameInterval.length === 0">
+                      <b-col>
+                        <span>无配置</span>
+                      </b-col>
+                    </b-row>
+                    <b-row v-for="(v, i) of form.mediaOut.video.parameters.keyFrameInterval" style="margin-bottom: 5px;">
+                      <b-col sm="8">
+                        <b-form-select v-model="v" :options="keyFrameIntervalFormat"></b-form-select>
+                      </b-col>
+                      <b-col sm="2">
+                        <i class="fas fa-times mhover" v-on:click="delKeyFrameInterval(i)"></i>
+                      </b-col>
+                    </b-row>
+                    <div class="modaltor-info">
+                      <b-button variant="success" v-on:click="addKeyFrameInterval">添加</b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>转码</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row class="modaltor-i">
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>音频</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.audio"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>视频</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.video.format"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>解析度</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.video.parameters.resolution"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>帧率</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.video.parameters.framerate"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>比特率</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.video.parameters.bitrate"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    <span>帧间隔</span>
+                  </b-col>
+                  <b-col>
+                    <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.transcoding.video.parameters.keyFrameInterval"></b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>SIP</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row class="modaltor-i">
+              <b-col sm="3">
+                <label>SIP服务</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-input type="type" v-model="form.sip.sipServer" placeholder="SIP服务"></b-form-input>
+              </b-col>
+            </b-row>
+            <b-row class="modaltor-i">
+              <b-col sm="3">
+                <label>用户名</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-input type="type" v-model="form.sip.username" placeholder="SIP服务用户名"></b-form-input>
+              </b-col>
+            </b-row>
+            <b-row class="modaltor-i">
+              <b-col sm="3">
+                <label>密码</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-input type="type" v-model="form.sip.password" placeholder="SIP服务密码"></b-form-input>
+              </b-col>
+            </b-row>
+           </div>
+        </div>
+        <div class="modaltor-ul">
+          <div class="modaltor-ul-title">
+            <span>通知</span>
+          </div>
+          <div class="modaltor-ul-body">
+            <b-row>
+              <b-col>
+                <span>参与者活动</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.notifying.participantActivities" style="position: relative;top: 0.4em;margin-left: 5px;"></b-form-checkbox>
+              </b-col>
+              <b-col>
+                <span>流更改</span>
+                <b-form-checkbox class="modaltor-ifrom-ul-checkbox" v-model="form.notifying.streamChange" style="position: relative;top: 0.4em;margin-left: 5px;"></b-form-checkbox>
+              </b-col>
+            </b-row>
+           </div>
+        </div>
+      </b-container>
+    </template>
+  </div>
+  <div class="modaltor-buttom">
+    <b-button variant="success" v-on:click="modaltorSubmit">确认</b-button>
+    <b-button variant="danger" v-on:click="modaltorSubmitClose">取消</b-button>
+  </div>
+</div>

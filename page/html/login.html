@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>管理后台 - 登录</title>
+    <!-- 
+      Module dependencies. 
+    -->
+    <meta charset="UTF-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/public/images/favicon.png" mce_href="favicon.ico" rel="icon" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/public/css/lib/bootstrap-vue.css"/>
+    <link rel="stylesheet" href="/public/css/lib/fontawesome.css">
+    <link rel="stylesheet" href="/public/css/lib/animate.css"/>
+    <link rel="stylesheet" href="/public/css/lib/loaders.css"/>
+    <script src="/public/js/bin/gload.js"></script>
+    <script src="/public/js/bin/axios.js"></script>
+    <script src="/public/js/bin/vue.js"></script>
+    <script src="/public/js/bin/polyfill.min.js"></script>
+    <script src="/public/js/bin/bootstrap-vue.js"></script>
+    <!-- 
+      Use dependencies. 
+    -->
+    <script src="/public/js/component/login.js"></script>
+    <link rel="stylesheet" href="/public/css/login.css"/>
+  </head>
+  <body>
+    <!-- 
+      vue容器. 
+    -->
+    <div id="vue-docker" v-cloak>
+      
+      <!-- 
+        登录. 
+      -->
+      <section class="shadow">
+        <div class="login">
+          <h4>
+            <img src="/public/images/favicon.png" />
+            <span>Manage</span>
+          </h4>
+          <div class="block" v-show="block">
+            <i class="fas fa-arrow-left mhover" v-on:click="blockUserName"></i>
+            <span>{{ username }}</span>
+          </div>
+          <h3>{{ type }}</h3>
+          <input v-bind:type="inputType" v-bind:placeholder="inputPlaceholder" v-model="input" v-on:keydown="keys" autofocus />
+          <button v-on:click="next">{{ button }}</button>
+          <div class="info">
+            <span>© 2018 Intel WebRTC MCU Manage . Mr.Panda</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
