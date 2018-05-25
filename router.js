@@ -54,6 +54,7 @@ function routers (middlewares) {
   router.use("/cluster", require("./router/cluster"))
   router.use("/service", require("./router/service"))
   router.use("/room", require("./router/room"))
+  router.use("/key", require("./router/key"))
   router.use(middlewares.error)
   
   /**
