@@ -47,10 +47,8 @@ router.get("/getError", async function (req, res) {
   try {
     let { page = 1 } = req.query
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    let Data = await req.mongodb.log.find({ 
-      type: "error",
-      read: false
-    }).limit(20).skip((Number(page) - 1) * 20).toArray()
+    let find = { type: "error", read: false }
+    let Data = await req.mongodb.log.find(find).limit(20).skip((Number(page) - 1) * 20).toArray()
     res.send({ Status: 200, Data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -65,11 +63,52 @@ router.get("/getError", async function (req, res) {
 router.get("/getUnreadBellSum", async function (req, res) {
   try {
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    let Data = await req.mongodb.log.aggregate([
-      {$match: {read : false}},
-      {$group: {_id: "$type", sum: {$sum : 1}}}
-    ]).toArray()
+    let aggregate = [ {$match: {read : false}}, {$group: {_id: "$type", sum: {$sum : 1}}} ]
+    let Data = await req.mongodb.log.aggregate(aggregate).toArray()
     res.send({ Status: 200, Data })
+  } catch (error) {
+    res.send({ Status: 404, Error: error.message })
+  }
+})
+
+
+/**
+ * 删除通知
+ * @private
+ */
+router.post("/delete", async function (req, res) {
+  try {
+    let { id } = req.body
+    assert.deepEqual(req.userLogin, true, "用户未登录")
+    let find = { _id: req.ojectID.createFromHexString(id) }
+    let log = await req.mongodb.log.findOne(find)
+    assert.deepEqual(log !== null && log !== undefined, true, "未找到结果")
+    let deleteLog = await req.mongodb.log.deleteOne(find)
+    assert.deepEqual(deleteLog.result.n, true, "删除失败")
+    res.send({ Status: 200, Data: { id } })
+  } catch (error) {
+    res.send({ Status: 404, Error: error.message })
+  }
+})
+
+
+/**
+ * 通知已读
+ * @private
+ */
+router.post("/readInfo", async function (req, res) {
+  try {
+    let { id } = req.body
+    assert.deepEqual(req.userLogin, true, "用户未登录")
+    let find = { _id: req.ojectID.createFromHexString(id) }
+    let log = await req.mongodb.log.findOne(find)
+    assert.deepEqual(log !== null && log !== undefined, true, "未找到结果")
+    delete log._id
+    log.read = true
+    let result = { $set: log }
+    let deleteLog = await req.mongodb.log.updateOne(find, result)
+    assert.deepEqual(deleteLog.result.n, true, "更新失败")
+    res.send({ Status: 200, Data: { id } })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
   }

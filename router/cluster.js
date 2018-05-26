@@ -82,13 +82,13 @@ router.post("/updateService", async function (req, res) {
   try {
     let { _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } = req.body
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    let service = await req.mongodb.cluster.findOne({ _id: req.ojectID.createFromHexString(_id) })
+    let find = { _id: req.ojectID.createFromHexString(_id) }
+    let result = { $set: { remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } }
+    let service = await req.mongodb.cluster.findOne(find)
     assert.deepEqual(service !== null && service !== undefined, true, "未找到数据")
-    let updateService = await req.mongodb.cluster.updateOne({ _id: req.ojectID.createFromHexString(_id) }, { $set: {
-      remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api
-    } })
+    let updateService = await req.mongodb.cluster.updateOne(find, result)
     assert.deepEqual(updateService.result.n, 1, "更新失败")
-    res.send({ Status: 200, Data: { _id, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } })
+    res.send({ Status: 200, Data: req.body })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
   }
@@ -103,13 +103,12 @@ router.post("/addService", async function (req, res) {
   try {
     let { remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api } = req.body
     assert.deepEqual(req.userLogin, true, "用户未登录")
+    let result = { remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api }
     let service = await req.mongodb.cluster.findOne({ remoteAddress })
     assert.deepEqual(service === null || service === undefined, true, "已存在重复节点")
-    let addService = await req.mongodb.cluster.insertOne({ remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api })
+    let addService = await req.mongodb.cluster.insertOne(result)
     assert.deepEqual(addService.result.n, 1, "新建失败")
-    res.send({ Status: 200, Data: { 
-      _id: addService.insertedId, remoteAddress, bindPort, anotherName, type, auth, maxNetwork, api 
-    } })
+    res.send({ Status: 200, Data: Object.assign(req.body, { _id: addService.insertedId }) })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
   }

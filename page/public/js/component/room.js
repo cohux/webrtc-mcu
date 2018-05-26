@@ -24,6 +24,7 @@ Read(async function (exports) {
   let vueApp = new Vue(new vueImport({
     el: "#vue-docker",
     data: {
+      exports: exports,
       settings: false,
       view: false,
       servicesName: "",
@@ -178,6 +179,23 @@ Read(async function (exports) {
     let roomGetRoom = await axios.post("/room/getRooms", { remoteAddress, id: serviceChangeInput })
     exports.assert(roomGetRoom.data.Status, 200, roomGetRoom.data.Error || "")
     vueApp.room = roomGetRoom.data.Data
+  } catch (error) {
+    exports.Print("Error", error.message)
+  }
+  
+  /**
+   * 获取事件
+   * @private
+   */
+  try {
+    let logGetAll = await axios.get("/log/getAll")
+    exports.assert(logGetAll.data.Status, 200, logGetAll.data.Error || "")
+    vueApp.event = logGetAll.data.Data
+    for (let v of logGetAll.data.Data) {
+      if (v.type == "error" && vueApp.error.length < 5) {
+        vueApp.error.push(v)
+      }
+    }
   } catch (error) {
     exports.Print("Error", error.message)
   }

@@ -138,6 +138,11 @@ Read(async function (exports) {
     let logGetAll = await axios.get("/log/getAll")
     exports.assert(logGetAll.data.Status, 200, logGetAll.data.Error || "")
     vueApp.event = logGetAll.data.Data
+    for (let v of logGetAll.data.Data) {
+      if (v.type == "error" && vueApp.error.length < 5) {
+        vueApp.error.push(v)
+      }
+    }
   } catch (error) {
     exports.Print("Error", error.message)
   }

@@ -22,6 +22,7 @@ Read(async function (exports) {
   let vueApp = new Vue(new vueImport({
     el: "#vue-docker",
     data: {
+      exports: exports,
       server: [],
       page: [1],
       settings: false,
@@ -221,6 +222,23 @@ Read(async function (exports) {
     for (let v of unreadBellSum.data.Data) {
       if (v._id == "error") {
         vueApp.bell += v.sum
+      }
+    }
+  } catch (error) {
+    exports.Print("Error", error.message)
+  }
+  
+  /**
+   * 获取事件
+   * @private
+   */
+  try {
+    let logGetAll = await axios.get("/log/getAll")
+    exports.assert(logGetAll.data.Status, 200, logGetAll.data.Error || "")
+    vueApp.event = logGetAll.data.Data
+    for (let v of logGetAll.data.Data) {
+      if (v.type == "error" && vueApp.error.length < 5) {
+        vueApp.error.push(v)
       }
     }
   } catch (error) {

@@ -1,0 +1,109 @@
+<!-- 
+  操作栏. 
+-->
+<div class="operating">
+  <div class="page">
+    <select v-on:change="typeChange">
+      <option value="error">警告及错误</option>
+      <option value="info">通知及事件</option>
+    </select>
+    <select v-on:change="pageChange">
+      <option v-for="v of page" v-bind:value="v">{{ v }}</option>
+    </select>
+    <select v-on:change="readChange">
+      <option value="all">全部</option>
+      <option value="read">未读</option>
+    </select>
+  </div>
+  <div class="buttom">
+    <b-button v-on:click="allRead">全部已读</b-button>
+  </div>
+</div>
+<!-- 
+  事件列表. 
+-->
+<b-container class="bv-example-row row-top" fluid>
+  <b-row>
+    <b-col>
+      <div class="v-shadow list">
+        <div class="list-name">
+          <span>
+            <i class="fas fa-weight"></i>
+            系统日志
+          </span>
+          <a href="javascript:void(0);" v-on:click="allDelete" v-show="allDeleteType">全部删除</a>
+        </div>
+        <div class="list-ul">
+          <div class="list-li list-text-left">
+            <b-row>
+              <b-col cols="1">
+                <b-form-checkbox v-on:change="allOn" style="
+                  margin-top: 10px;
+                  margin-left: 15px;
+                "></b-form-checkbox>
+              </b-col>
+              <b-col cols="1">
+                <span>未读</span>
+              </b-col>
+              <b-col cols="1">
+                <span>事件类型</span>
+              </b-col>
+              <b-col cols="5">
+                <span>详情</span>
+              </b-col>
+              <b-col cols="2">
+                <span>时间</span>
+              </b-col>
+              <b-col cols="2">
+                <span>操作</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i" v-show="event.length === 0">
+            <b-row>
+              <b-col>
+                <span>无结果</span>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="list-i list-text-left list-hover" v-for="v of event">
+            <b-row>
+              <b-col class="list-value" cols="1">
+                <b-form-checkbox v-model="v.checkbox" style="
+                  margin-top: 10px;
+                  margin-left: 15px;
+                "></b-form-checkbox>
+              </b-col>
+              <b-col class="list-value" cols="1" style="
+                text-align: center;
+                line-height: 3em;
+              ">
+                <i class="fas fa-circle" style="color: #0c9cf8;font-size: 0.7em;" v-show=" !v.read "></i>
+              </b-col>
+              <b-col class="list-value" cols="1">
+                <span>
+                  {{ v.type === 'error' ? '错误' : '提醒' }}
+                </span>
+              </b-col>
+              <b-col class="list-value" cols="5">
+                <a v-bind:href=" '/view/log/viewLog?id=' + v._id ">
+                  <span style="color: blue;">{{ v.event }}</span>
+                </a>
+              </b-col>
+              <b-col class="list-value" cols="2">
+                <span>{{ exports.TimeString(new Date(v.time), true) }}</span>
+              </b-col>
+              <b-col class="list-value" cols="2" style="
+                text-align: center;
+                line-height: 3em;
+                color: #999;
+              ">
+                <i class="fas fa-times list-edit-i mhover" v-on:click="delLog(v)"></i>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
+</b-container>

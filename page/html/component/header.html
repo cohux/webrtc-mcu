@@ -17,11 +17,15 @@
       'viewCluster': '查看服务',
       'cluster': '节点管理',
       'viewRooms': '房间管理',
-      'key': '认证管理'
+      'key': '认证管理',
+      'log': '系统日志'
     })[model] %>
   </div>
   <div class="information">
-    <div class="bell">
+    <div 
+      class="bell mhover"
+      v-on:click="billHover = billHover ? false : true"
+    >
       <span class="fa-layers fa-fw" v-bind:style="{
         color: bell > 0 ? '#f00222' : ''                                 
       }">
@@ -33,6 +37,27 @@
       <a href="/auth/loginOut">
         登出
       </a>
+    </div>
+  </div>
+  <!-- 
+    警告列表. 
+  -->
+  <div class="error v-shadow" v-show="billHover">
+    <div class="error-aort"></div>
+    <div class="error-title">
+      <span>未处理错误事件</span>
+      <a href="javascript:void(0);" v-on:click="billHover = false">关闭</a>
+    </div>
+    <div class="error-i" v-show="error.length === 0">
+      <span>无未处理事件</span>
+    </div>
+    <div class="error-i mhover" v-for="v of error" v-on:click="errorClick(v)">
+      <span>{{ v.event }}</span>
+      <font>{{ exports.TimeString(new Date(v.time), true) }}</font>
+      <i class="ellipsis fas fa-ellipsis-v"></i>
+    </div>
+    <div class="error-button">
+      <a href="/view/log">查看更多</a>
     </div>
   </div>
 </header>

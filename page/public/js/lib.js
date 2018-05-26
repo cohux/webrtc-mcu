@@ -65,6 +65,8 @@ function vueImport (Inport) {
   this.data.menuSpanType = true
   this.data.menu = useData.menu
   this.data.bell = 0
+  this.data.billHover = false
+  this.data.error = []
   this.methods.menuTarget = function () {
     if (this.menuTargetType) {
       this.menuTargetType = false
@@ -83,5 +85,8 @@ function vueImport (Inport) {
     return {
       "menu-li-checkbox": v.value === useData.value
     }
+  }
+  this.methods.errorClick = function (error) {
+    location.href = "/viewLog?id=" + error._id
   }
 }
