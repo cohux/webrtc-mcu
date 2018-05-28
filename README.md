@@ -25,6 +25,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 
 
 ## Debug
+
 ```console
 /**
  *      
@@ -48,8 +49,8 @@ Create high-performance, reliable, and scalable real-time communication solution
  *           └─┐  ┐  ┌───────┬──┐  ┌──┘         
  *             │ ─┤ ─┤       │ ─┤ ─┤         
  *             └──┴──┘       └──┴──┘ 
- *                 神兽保佑 
- *                 代码无BUG! 
+ *               CNM Bless 
+ *             Code Not BUG! 
  */
 ```
 
