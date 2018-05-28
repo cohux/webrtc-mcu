@@ -346,15 +346,6 @@ class wsService {
       })
       
       /**
-       * 发送日志.
-       * @private
-       */
-      EventEmitters.emit("info", {
-        event: "未授权的websocket连接: " + remoteAddress,
-        message: error.message
-      })
-      
-      /**
        * 强制断开连接.
        * @private
        */

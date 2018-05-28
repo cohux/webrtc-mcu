@@ -34,6 +34,7 @@ let dirname
 let dbService
 let mcuApiServices
 let eventEmitters
+let targs
 let EventEmitters = new EventEmitter()
 
 
@@ -42,13 +43,14 @@ let EventEmitters = new EventEmitter()
  * @private
  */
 class middleware {
-  constructor (includes, dbServices, configures, dirnames, mcuApiService, eventEmitter) {
+  constructor (includes, dbServices, configures, dirnames, mcuApiService, eventEmitter, targ) {
     include = includes
     configure = configures
     dirname = dirnames
     dbService = dbServices
     mcuApiServices = mcuApiService
     eventEmitters = eventEmitter
+    targs = targ
   }
 
   /**
@@ -68,6 +70,7 @@ class middleware {
     req.mongodb = dbService.MongoDBClient
     req.redis = dbService.RedisClient
     req.api = mcuApiServices
+    req.targs = targs
     
     /**
      * 判断是否为移动设备
@@ -164,6 +167,15 @@ class middleware {
     } else {
       res.sendStatus(404)
     }
+  }
+  
+  /**
+   * 跳转HTTPS
+   * @private
+   */
+  locationHttps (req, res) {
+    res.writeHead(301, { "Location": "https://" + configure.http.host + req.url })
+    res.write("Location: HTTPS")
   }
   
   /**

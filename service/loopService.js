@@ -59,9 +59,9 @@ class loopService {
         let systemInfo = await inthis.dbService.RedisClient.Get("systemInfo")
         if (Array.isArray(systemInfo)) {
           for (let v of systemInfo) {
-            let sysInfo = await inthis.dbService.MongoDBClient.findOne({ hostname: v.hostname })
+            let sysInfo = await inthis.dbService.MongoDBClient.system.findOne({ hostname: v.hostname })
             if (sysInfo !== null && sysInfo !== undefined) {
-              await inthis.dbService.MongoDBClient.updateOne({ hostname: v.hostname }, { $set: v })
+              await inthis.dbService.MongoDBClient.system.updateOne({ hostname: v.hostname }, { $set: v })
             } else {
               await inthis.dbService.MongoDBClient.insertOne(v)
             }

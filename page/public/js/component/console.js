@@ -41,7 +41,7 @@ Read(async function (exports) {
    * 连接websocket获取数据
    * @private
    */
-  let socket = new websocket("ws://" + hostname + "/socket")
+  let socket = new websocket((location.href.startsWith("https://") ? "wss://" : "ws://") + hostname + "/socket")
   let sockLoop = {}
   
   /**

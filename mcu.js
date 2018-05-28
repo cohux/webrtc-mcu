@@ -6,6 +6,32 @@
  */
 
 
+ /**
+  *               南无阿弥陀佛
+  *
+  *                  _ooOoo_
+  *                 o8888888o
+  *                 88" . "88
+  *                 (| -_- |)
+  *                 O\  =  /O
+  *              ____/`---'\____
+  *            .'  \\|     |//  `.
+  *           /  \\|||  :  |||//  \
+  *          /  _||||| -:- |||||-  \
+  *          |   | \\\  -  /// |   |
+  *          | \_|  ''\---/''  |   |
+  *          \  .-\__  `-`  ___/-. /
+  *        ___`. .'  /--.--\  `. . __
+  *     ."" '<  `.___\_<|>_/___.'  >'"".
+  *    | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+  *    \  \ `-.   \_ __\ /__ _/   .-` /  /
+  *======`-.____`-.___\_____/___.-`____.-'======
+  *                `=---='
+  *^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  *      佛祖保佑       永无BUG
+*/
+
+
 "use strict"
 
 
@@ -14,35 +40,46 @@
  */
 const fs = require("fs")
 const ws = require("ws")
-const toml = require("toml")
-const configure = toml.parse(fs.readFileSync("./configure.toml"))
-const events = require("events")
 const express = require("express")
+const toml = require("toml")
+const events = require("events")
 const ejs = require("ejs")
-const app = express()
 const http = require("http")
+const https = require("https")
+const router = require("./router")
+const targs = require("./lib/targs")
+const include = require("./lib/include")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const cookieSession = require("cookie-session")
-const include = require("./lib/include")
 const middleware = require("./service/middleware")
 const dbService = require("./service/dbService")
 const wsService = require("./service/wsService")
 const logService = require("./service/logService")
 const loopService = require("./service/loopService")
 const mcuApiService = require("./service/mcuApiService")
-const router = require("./router")
-const server = http.createServer(app)
+
+
+/**
+ * 初始化组件
+ * @private
+ */
+const app = express()
+const configure = toml.parse(fs.readFileSync("./configure.toml"))
+const key = fs.readFileSync(configure.https.key)
+const cert = fs.readFileSync(configure.https.cert)
+const server = https.createServer({ key, cert }, app)
 const eventEmitters = new events.EventEmitter()
 const websocket = new ws.Server({ server })
 const dbServices = new dbService(configure)
 const includes = new include(configure)
 const dbConnection = dbServices.connection()
 const mcuApiServices = new mcuApiService(includes, dbConnection, configure)
-const middlewares = new middleware(includes, dbConnection, configure, __dirname, mcuApiServices, eventEmitters)
 const wsServices = new wsService(includes, dbConnection, configure, __dirname, websocket, eventEmitters)
 const logServices = new logService(includes, dbConnection, configure)
 const loopServices = new loopService(includes, dbConnection, configure, __dirname)
+const middlewares = new middleware(includes, dbConnection, configure, __dirname, mcuApiServices, eventEmitters, targs)
+const httpLocation = http.createServer(middlewares.locationHttps)
 
 
 /**
@@ -65,6 +102,7 @@ app.use("/", router(middlewares))
  * 初始化服务.
  * @private
  */
+httpLocation.listen(80)
 loopServices.heapMaintain()
 server.listen(configure.http.port)
 logServices.bind([ wsServices, dbServices, middlewares, loopServices ])
