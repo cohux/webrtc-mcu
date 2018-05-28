@@ -9,7 +9,6 @@ Create high-performance, reliable, and scalable real-time communication solution
 
 ## Module dependencies
 
-* [arguments.type](https://github.com/xivistudios/arguments.type)
 * [axios](https://github.com/axios/axios)
 * [body-parser](https://github.com/expressjs/body-parser)
 * [cookie-parser](https://github.com/expressjs/cookie-parser)
@@ -23,6 +22,37 @@ Create high-performance, reliable, and scalable real-time communication solution
 * [ws](https://github.com/websockets/ws)
 * [uuid](https://github.com/kelektiv/node-uuid)
 * [http-proxy](https://github.com/nodejitsu/node-http-proxy)
+
+
+## Debug
+```console
+/**
+ *      
+ *          ┌─┐       ┌─┐
+ *       ┌──┘ ┴───────┘ ┴──┐
+ *       │                 │
+ *       │       ───       │
+ *       │  ─┬┘       └┬─  │
+ *       │                 │
+ *       │       ─┴─       │
+ *       │                 │
+ *       └───┐         ┌───┘
+ *           │         │
+ *           │         │
+ *           │         │
+ *           │         └──────────────┐
+ *           │                        │
+ *           │                        ├─┐
+ *           │                        ┌─┘    
+ *           │                        │
+ *           └─┐  ┐  ┌───────┬──┐  ┌──┘         
+ *             │ ─┤ ─┤       │ ─┤ ─┤         
+ *             └──┴──┘       └──┴──┘ 
+ *                 神兽保佑 
+ *                 代码无BUG! 
+ */
+```
+
 
 ## About
 
