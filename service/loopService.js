@@ -43,34 +43,12 @@ class loopService {
   }
   
   /**
+   * TODO: 待写插槽
    * 数据维护
    * @private
    */
   heapMaintain () {
-    let inthis = this
     
-    /**
-     * 每隔10分钟
-     * 将redis存储的节点数据同步到mongodb
-     * @private
-     */
-    this.loop.push(setInterval(async function () {
-      try {
-        let systemInfo = await inthis.dbService.RedisClient.Get("systemInfo")
-        if (Array.isArray(systemInfo)) {
-          for (let v of systemInfo) {
-            let sysInfo = await inthis.dbService.MongoDBClient.system.findOne({ hostname: v.hostname })
-            if (sysInfo !== null && sysInfo !== undefined) {
-              await inthis.dbService.MongoDBClient.system.updateOne({ hostname: v.hostname }, { $set: v })
-            } else {
-              await inthis.dbService.MongoDBClient.insertOne(v)
-            }
-          }
-        }
-      } catch (error) {
-        EventEmitters.emit("error", error)
-      }
-    }, 600000))
   }
   
   /**

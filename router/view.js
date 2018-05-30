@@ -24,15 +24,6 @@ const router = express.Router()
 
 
 /**
- * 登录
- * @private
- */
-router.get("/login", async function (req, res) {
-  res.view("login.html")
-})
-
-
-/**
  * 视图路由
  * @private
  */
@@ -43,6 +34,15 @@ router.get("/:model", async function (req, res) {
   } catch (error) {
     res.redirect("/view/login")
   }
+})
+
+
+/**
+ * 登录
+ * @private
+ */
+router.get("/login", async function (req, res) {
+  res.view("login.html")
 })
 
 

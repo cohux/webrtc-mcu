@@ -84,7 +84,6 @@ class middleware {
       req.mobile = false
     }
 
-    
     /**
      * 跨域
      * @private

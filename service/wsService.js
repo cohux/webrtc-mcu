@@ -156,7 +156,7 @@ class wsService {
             systemInfo = []
             systemInfo.push(parms.message)
           }
-          await this.dbService.RedisClient.set("systemInfo", JSON.stringify(systemInfo))
+          this.dbService.RedisClient.set("systemInfo", JSON.stringify(systemInfo))
         } else {
           return
         }

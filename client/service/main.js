@@ -23,9 +23,9 @@ const assert = require("assert")
 const express = require("express")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-const router = require("./service/router.js")
-const wsService = require("./service/wsService")
-const dbService = require("./service/dbService")
+const router = require("./router.js")
+const wsService = require("./wsService")
+const dbService = require("./dbService")
 
 
 /**
@@ -34,7 +34,7 @@ const dbService = require("./service/dbService")
  */
 const app = express()
 const server = http.createServer(app)
-const configure = toml.parse(fs.readFileSync("./client.toml"))
+const configure = toml.parse(fs.readFileSync("../client.toml"))
 const socket = new WebSocket(configure.websocket.host)
 const dbServices = new dbService(configure)
 const wsServices = new wsService(socket, dbServices)

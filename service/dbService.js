@@ -19,8 +19,8 @@
  * Module dependencies.
  */
 const redis = require("redis")
-const { promisify } = require("util")
-const { MongoClient } = require("mongodb")
+const util = require("util")
+const mongodb = require("mongodb")
 const { EventEmitter } = require("events")
 
 
@@ -29,62 +29,64 @@ const { EventEmitter } = require("events")
  * @private
  */
 let EventEmitters = new EventEmitter()
+let mongodConnect = util.promisify(mongodb.MongoClient.connect)
 
 
 /**
  * 数据库连接类
  * @private
  */
-class dbService {
-  constructor (configure) {
-    this.configure = configure
-  }
-  
-  /**
-   * 连接数据库
-   * @private
-   */
-  connection () {
-    let { configure } = this
-    let MongoDBClient = {}
-    let RedisClient = redis.createClient(configure.redis)
-    let mongoURI = "mongodb://" + configure.mongodb.host + ":" + configure.mongodb.port
-    MongoClient.connect(mongoURI, function (error, Mongo) {
-      if (error) {
-        EventEmitters.emit("error", error)
-        throw error
-      } else {
-        for (let v of configure.mongodb.document) {
-          MongoDBClient[v] = Mongo.db(configure.mongodb.dbname).collection(v)
-        }
-      }
-    })
-    RedisClient.on("ready", function () {
-      RedisClient.__proto__.Del = promisify(RedisClient.del).bind(RedisClient)
-      RedisClient.__proto__.Get = promisify(RedisClient.get).bind(RedisClient)
-    })
-    RedisClient.on("error", function (error) {
-      EventEmitters.emit("error", error)
-      throw error
-    })
-    return {
-      MongoDBClient,
-      RedisClient
-    }
-  }
-  
-  /**
-   * 监听事件
-   * @private
-   */
-  on (event, emit) {
-    EventEmitters.on(event, emit)
-  }
+let dbService = function () {
+  this.MongoDBClient = {}
+  this.RedisClient = {}
 }
 
 
 /**
- * 导出数据库连接类
+ * 连接Monogodb数据库
+ * @private
+ */
+dbService.prototype.mongodb = function(options) {
+  let uri = "mongodb://" + options.host + ":" + options.port
+  mongodConnect(uri, options.options || {}).then(mongod => {
+    for (let v of options.document) {
+      this.MongoDBClient[v] = mongod.db(options.dbname).collection(v)
+    }
+  }).catch(error => {
+    EventEmitters.emit("error", error)
+    throw error
+  })
+}
+
+
+/**
+  * 连接Redis数据库
+  * @private
+  */
+dbService.prototype.redis = function(options) {
+  this.RedisClient = redis.createClient(options)
+  this.RedisClient.on("ready", () => {
+    this.RedisClient.__proto__.Del = util.promisify(this.RedisClient.del).bind(this.RedisClient)
+    this.RedisClient.__proto__.Get = util.promisify(this.RedisClient.get).bind(this.RedisClient)
+  })
+  this.RedisClient.on("error", function (error) {
+    EventEmitters.emit("error", error)
+    throw error
+  })
+}
+  
+
+/**
+ * 监听事件
+ * @private
+ */
+dbService.prototype.on = function (event, emit) {
+  EventEmitters.on(event, emit)
+}
+
+
+/**
+ * 导出类函数
  * @private
  */
 module.exports = dbService

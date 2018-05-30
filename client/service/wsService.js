@@ -17,7 +17,7 @@
  * Module dependencies.
  */
 const os = require("os")
-const system = require("../system")
+const system = require("../lib/system")
 
 
 /**
@@ -55,7 +55,7 @@ class wsService {
          */
         setInterval(async () => {
           let network = await system.getNetWork()
-          let cpu = await system.getCpu()
+          let sys = await system.getSystem()
           this.sendMessage({
             event: "systemInfo",
             message: {
@@ -69,7 +69,7 @@ class wsService {
               uptime: os.uptime(),
               freemem: os.freemem(),
               totalmem: os.totalmem(),
-              network, cpu
+              network, system: sys 
             }
           })
         }, 5000)

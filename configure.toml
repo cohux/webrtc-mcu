@@ -37,11 +37,6 @@ document = [
   "apiAuth"
 ]
 
-# mongodb数据库认证配置
-[mongodb.auth]
-user = "panda"
-password = "XIVIstudios112525"
-
 # redis数据库连接配置
 [redis]
 host = "127.0.0.1"

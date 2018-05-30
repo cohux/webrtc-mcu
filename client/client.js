@@ -60,5 +60,5 @@ if (cluster.isMaster) {
     }, 2000)
   })
 } else {
-  require("./service")
+  require("./service/main")
 }

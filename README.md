@@ -3,25 +3,29 @@
 Create high-performance, reliable, and scalable real-time communication solutions. Server and client tools to deliver RTC experiences with video conferencing capabilities. Optimized for Intel® Architecture to take full advantage of Intel hardware-acceleration with H.264 and HEVC encode/decode.
 
 
-# Version
+## Version
 
 * 0.0.1 Nightly.
 
 ## Module dependencies
 
-* [axios](https://github.com/axios/axios)
-* [body-parser](https://github.com/expressjs/body-parser)
-* [cookie-parser](https://github.com/expressjs/cookie-parser)
-* [cookie-session](https://github.com/expressjs/cookie-session)
-* [ejs](https://github.com/tj/ejs)
-* [express](https://github.com/expressjs/express)
-* [mongodb](https://github.com/mongodb/node-mongodb-native)
-* [nodemailer](https://github.com/nodemailer/nodemailer)
-* [redis](https://github.com/NodeRedis/node_redis)
-* [toml](https://github.com/BinaryMuse/toml-node)
-* [ws](https://github.com/websockets/ws)
-* [uuid](https://github.com/kelektiv/node-uuid)
-* [http-proxy](https://github.com/nodejitsu/node-http-proxy)
+* [axios](https://github.com/axios/axios) Promise based HTTP client for the browser and node.js.
+* [body-parser](https://github.com/expressjs/body-parser) Node.js body parsing middleware.
+* [cookie-parser](https://github.com/expressjs/cookie-parser) Parse HTTP request cookies.
+* [cookie-session](https://github.com/expressjs/cookie-session) Simple cookie-based session middleware.
+* [ejs](https://github.com/tj/ejs) Embedded JavaScript templates for node.
+* [express](https://github.com/expressjs/express) Fast, unopinionated, minimalist web framework for node.
+* [mongodb](https://github.com/mongodb/node-mongodb-native) Mongo DB Native NodeJS Driver.
+* [nodemailer](https://github.com/nodemailer/nodemailer) Send e-mails with Node.JS.
+* [redis](https://github.com/NodeRedis/node_redis) redis client for node.
+* [toml](https://github.com/BinaryMuse/toml-node) TOML parser for Node.js and the Browser. Parses TOML v0.4.0.
+* [ws](https://github.com/websockets/ws) Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js.
+* [uuid](https://github.com/kelektiv/node-uuid) Generate RFC-compliant UUIDs in JavaScript.
+* [http-proxy](https://github.com/nodejitsu/node-http-proxy) A full-featured http proxy for node.js.
+* [amqplib](https://github.com/squaremo/amqp.node) AMQP 0-9-1 library and client for Node.JS.
+* [moment](https://github.com/moment/moment) Parse, validate, manipulate, and display dates in javascript.
+* [decimal.js](https://github.com/MikeMcl/decimal.js) An arbitrary-precision Decimal type for JavaScript.
+* [pg-promise](https://github.com/vitaly-t/pg-promise) Promises/A+ interface for PostgreSQL.
 
 
 ## Debug
