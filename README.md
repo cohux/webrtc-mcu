@@ -26,11 +26,11 @@ You need to have the following dependencies ready.
 
 * [MongoDB](https://www.mongodb.com/) **(>= 3.6.x)** MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need.
 
-* [Redis](https://redis.io/) **(>= 4.0.x)** Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+* [Redis](https://redis.io/) **(>= 4.x)** Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
 
-* [Node.JS](https://nodejs.org) **(>= 10.0.x)** Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+* [Node.JS](https://nodejs.org) **(>= 10.x)** Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
-* [PostgreSQL](https://www.postgresql.org/)  **(>= 10.0.x)** PostgreSQL is a powerful, open source object-relational database system with over 30 years of active development that has earned it a strong reputation for reliability.
+* [PostgreSQL](https://www.postgresql.org/)  **(>= 10.x)** PostgreSQL is a powerful, open source object-relational database system with over 30 years of active development that has earned it a strong reputation for reliability.
 
 #### NPM module dependencies
 
