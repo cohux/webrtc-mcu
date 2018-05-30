@@ -20,7 +20,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 
 ## You need to
 
-You need to have the following dependencies ready.
+``You need to have the following dependencies ready.``
 
 #### System environment
 
