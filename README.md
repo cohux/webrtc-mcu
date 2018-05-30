@@ -14,7 +14,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 * The service can be run independently, **Intel WebRTC MCU®** needs to connect to this service, managed by this service.
 * This service provides a remote call API.
 * This service requires runtime injection of **Intel WebRTC MCU®**.
-* Use **WebSocket®** to send system information between nodes and centers.
+* Use **WebSocket** to send system information between nodes and centers.
 * Tasks are passed between nodes and centers through **RabbitMQ®**
 
 
@@ -25,11 +25,8 @@ You need to have the following dependencies ready.
 #### System environment
 
 * [MongoDB](https://www.mongodb.com/) **(>= 3.6.x)** MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need.
-
 * [Redis](https://redis.io/) **(>= 4.x)** Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
-
 * [Node.JS](https://nodejs.org) **(>= 10.x)** Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
-
 * [PostgreSQL](https://www.postgresql.org/)  **(>= 10.x)** PostgreSQL is a powerful, open source object-relational database system with over 30 years of active development that has earned it a strong reputation for reliability.
 
 #### NPM module dependencies
