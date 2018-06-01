@@ -40,7 +40,7 @@ router.post("/login", async function (req, res) {
     req.session.views = Data.username
     Data.decryptKey = DecryptKey
     Data._id = String(Data._id)
-    req.redis.set(Data.username, JSON.stringify(Data))
+    req.redis.set("USERINFO_" + Data.username, JSON.stringify(Data))
     res.cookie("password", DecryptKey, { httpOnly: true })
     res.cookie("username", Data.username, { httpOnly: true })
     res.send({ Status: 200 })
@@ -76,7 +76,7 @@ router.get("/loginOut", async function (req, res) {
   try {
     let { username } = req.userData
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    await req.redis.Del(username)
+    await req.redis.Del("USERINFO_" + username)
     req.session.views = null
     res.clearCookie("username")
     res.clearCookie("password")

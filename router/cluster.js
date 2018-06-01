@@ -123,18 +123,11 @@ router.post("/getService", async function (req, res) {
   try {
     let { remoteAddress } = req.body
     assert.deepEqual(req.userLogin, true, "用户未登录")
-    let sysInfo = await req.redis.Get("systemInfo")
-    sysInfo = JSON.parse(sysInfo)
-    assert.deepEqual(Array.isArray(sysInfo), true, "没有节点数据")
-    for (let i = 0, loop = false; i < sysInfo.length; i ++) {
-      if (sysInfo[i].remoteAddress === remoteAddress) {
-        res.send({ Status: 200, Data: sysInfo[i] })
-        break
-      }
-      if (i === sysInfo.length - 1 && !loop) {
-        res.send({ Status: 404, Error: "未找到节点信息" })
-      }
-    }
+    let nodeInfo = await req.redis.Get("NODEINFO")
+    assert.deepEqual(nodeInfo !== null && nodeInfo !== undefined, true, "没有节点数据")
+    nodeInfo = JSON.parse(nodeInfo)
+    assert.deepEqual(remoteAddress in nodeInfo, true, "没有节点数据")
+    res.send({ Status: 200, Data: nodeInfo[remoteAddress] })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
   }

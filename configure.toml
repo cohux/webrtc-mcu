@@ -3,6 +3,9 @@
 # Copyright(c) 2018-2023 Mr.Panda xivistudios
 # MIT Licensed
 
+
+# http 服务器配置部分
+# 包括监听端口 访问控制 https证书 session
 # http配置
 [http]
 host = "www.xivistudios.com"
@@ -10,43 +13,63 @@ port = 443
 origin = "https://www.xivistudios.com"
 views = "/root/package/webrtc-mcu/page/html"
 public = "/root/package/webrtc-mcu/page/public"
-
 # https证书配置
 [https]
 key = "/root/cert/www.xivistudios.com.key"
 cert = "/root/cert/www.xivistudios.com.pem"
-
 # http session 配置
 [session]
 name = "authUser"
 maxAge = 604800000
-keys = [
-  "dskaopd8sa908csacu89u9c", 
-  "cad8c90a8c8as8cx8a8csac6tc7"
-]
+keys = [ "dskaopd8sa908csacu89u9c", "cad8c90a8c8as8cx8a8csac6tc7" ]
 
+
+# 数据库以及消息队列连接配置
+# 配置MongoDB Redis RabbitMQ
 # mongodb数据库连接配置
 [mongodb]
-host = "127.0.0.1"
-port = 27017
+path = "mongodb://127.0.0.1:27017"
 dbname = "WEBRTCMCU"
-document = [
-  "admin",
-  "log",
-  "cluster",
-  "apiAuth"
-]
-
+document = [ "admin", "log", "cluster", "apiAuth" ]
+# mongodb数据库配置
+[mongodb.options]
+poolSize = 10
+ssl = false
+noDelay = true
+keepAlive = true
 # redis数据库连接配置
 [redis]
 host = "127.0.0.1"
 port = 6379
 password = "YTg4ZDkyZDQxZTk1OWVhNDIxMTQ4OGM4MWZmOWIyNzcyY2UwYzljNjY1Mzg1MmM1Z"
+# RabbitMQ连接配置
+[rabbitmq]
+protocol = "amqp"
+hostname = "127.0.0.1"
+port = 5672
+username = "guest"
+password = "guest"
+locale = "en_US"
+frameMax = 0
+heartbeat = 0
+vhost = "/"
+# postgresql连接配置
+[postgresql]
+host = "127.0.0.1"
+port = 5432
+database = "WEBRTCMCU"
+user = "postgres"
+password = "xiaopange520"
+keepAlive = true
 
+
+# 密钥配置
+# 主密钥 加密方式 认证密钥
 # 加密配置
 [crypto]
 type = "aes256"
 key = "ZDQxZTQ4OGM4MTg4ZDkYzljNjYIyNzcy"
+
 
 # 邮件服务配置
 [nodemailer]
@@ -55,17 +78,18 @@ host = "smtp.qq.com"
 port = 465
 secureConnection = true
 secure = true
-
 # 邮件服务认证配置
 [nodemailer.auth]
 user = "1198100147@qq.con"
 pass = "bdineybhjivyjeai"
+
 
 # 管理服务接入端口
 [service]
 port = 88
 router = "/masterApi"
 
+
 # 日志配置
 [log]
-path = "/root/log/mcu.log"
+path = "/root/log/mcu"

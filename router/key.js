@@ -71,7 +71,7 @@ router.post("/addUsers", async function (req, res) {
     assert.deepEqual(addUser.result.n, 1, "新建失败")
     let session = await req.api.authLoad(key)
     let Data = { session, username, key, carrier, roles, _id: addUser.insertedId }
-    req.redis.set("use-" + Data.username, JSON.stringify(Data))
+    req.redis.set("APIUSERINFO_" + Data.username, JSON.stringify(Data))
     res.send({ Status: 200, Data })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -92,7 +92,7 @@ router.post("/updateUsers", async function (req, res) {
     let updateUsers = await req.mongodb.apiAuth.updateOne({ _id: req.ojectID.createFromHexString(_id) }, { $set: { username, key, carrier, roles } })
     assert.deepEqual(updateUsers.result.n, 1, "更新失败")
     let session = await req.api.authLoad(key)
-    req.redis.set("use-" + username, JSON.stringify({ username, key, carrier, roles, _id, session }))
+    req.redis.set("APIUSERINFO_" + username, JSON.stringify({ username, key, carrier, roles, _id, session }))
     res.send({ Status: 200, Data: { username, key, carrier, roles, _id, session } })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -112,7 +112,7 @@ router.post("/deleteUsers", async function (req, res) {
     assert.deepEqual(user !== null && user !== undefined, true, "用户不存在")
     let deleteUsers = await req.mongodb.apiAuth.deleteOne({ _id: req.ojectID.createFromHexString(id) })
     assert.deepEqual(deleteUsers.result.n, 1, "删除失败")
-    await req.redis.Del("use-" + user.username)
+    await req.redis.Del("APIUSERINFO_" + user.username)
     res.send({ Status: 200, Data: id })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })
@@ -132,7 +132,7 @@ router.post("/flushSession", async function (req, res) {
     assert.deepEqual(user !== null && user !== undefined, true, "用户不存在")
     let session = await req.api.authLoad(user.key)
     user.session = session
-    req.redis.set("use-" + user.username, JSON.stringify(user))
+    req.redis.set("APIUSERINFO_" + user.username, JSON.stringify(user))
     res.send({ Status: 200, Data: session })
   } catch (error) {
     res.send({ Status: 404, Error: error.message })

@@ -38,7 +38,7 @@ router.use(async function (req, res, next) {
      * 读取用户信息
      * @private
      */
-    let user = await req.redis.Get("use-" + username)
+    let user = await req.redis.Get("APIUSERINFO_" + username)
     assert.deepEqual(user !== null && user !== undefined, true, "认证失败")
     user = JSON.parse(user)
     

@@ -142,21 +142,11 @@ class wsService {
          * @private
          */
         if (parms.event === "systemInfo") {
-          let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
-          systemInfo = JSON.parse(systemInfo)
+          let nodeInfo = await this.dbService.RedisClient.Get("NODEINFO")
+          nodeInfo = nodeInfo ? JSON.parse(nodeInfo) : {}
+          nodeInfo[remoteAddress] = parms.message
           parms.message.remoteAddress = remoteAddress
-          if (Array.isArray(systemInfo) && systemInfo.length > 0) {
-            for (let i = 0; i < systemInfo.length; i ++) {
-              if (systemInfo[i].hostname === parms.message.hostname) {
-                systemInfo[i] = parms.message
-                break
-              }
-            }
-          } else {
-            systemInfo = []
-            systemInfo.push(parms.message)
-          }
-          this.dbService.RedisClient.set("systemInfo", JSON.stringify(systemInfo))
+          this.dbService.RedisClient.set("NODEINFO", JSON.stringify(nodeInfo))
         } else {
           return
         }
@@ -173,12 +163,12 @@ class wsService {
          * @private
          */
         if (parms.event === "systemInfo") {
-          let systemInfo = await this.dbService.RedisClient.Get("systemInfo")
-          assert.deepEqual(systemInfo !== null && systemInfo !== undefined, true, "无法获取系统数据")
-          systemInfo = JSON.parse(systemInfo)
+          let nodeInfo = await this.dbService.RedisClient.Get("NODEINFO")
+          assert.deepEqual(nodeInfo !== null && nodeInfo !== undefined, true, "无法获取系统数据")
+          nodeInfo = JSON.parse(nodeInfo)
           wsService.send(socket, {
             event: "systemInfo",
-            message: systemInfo
+            message: nodeInfo
           })
         } else {
           return
@@ -195,20 +185,6 @@ class wsService {
       wsService.send(socket, {
         event: "ERR_MESSAGE_PARSE",
         message: error.message
-      })
-      
-      /**
-       * 如果是节点，记录错误信息.
-       * @private
-       */
-      auth.type === "cluster" && EventEmitters.emit("info", {
-        event: "节点[ " + remoteAddress + " ]数据解析错误",
-        message: JSON.stringify({
-          remoteAddress,
-          remoteFamily,
-          remotePort,
-          error: error.message
-        })
       })
     }
   }
@@ -294,7 +270,7 @@ class wsService {
         } = querystring.parse(headers.cookie, "; ", "=")
         assert.deepEqual(password !== null && password !== undefined, true, "连接没有token")
         assert.deepEqual(username !== null && username !== undefined, true, "连接没有token")
-        let user = await this.dbService.RedisClient.Get(String(username))
+        let user = await this.dbService.RedisClient.Get("USERINFO_" + String(username))
         user = JSON.parse(user)
         assert.deepEqual(user !== null && user !== undefined, true, "没有找到用户")
         assert.deepEqual(username === user.username && password === user.decryptKey, true, "未通过鉴权")

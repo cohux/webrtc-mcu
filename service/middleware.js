@@ -71,6 +71,8 @@ class middleware {
     req.redis = dbService.RedisClient
     req.api = mcuApiServices
     req.targs = targs
+    req.rabbitmq = dbServices.RabbitMQ
+    req.postgresql = dbService.PostgreSQL
     
     /**
      * 判断是否为移动设备
@@ -132,7 +134,7 @@ class middleware {
       assert.equal(username !== undefined && username !== null, true)
       assert.equal(password !== undefined && password !== null, true)
       assert.equal(views !== undefined && views !== null, true)
-      let data = await dbService.RedisClient.Get(views)
+      let data = await dbService.RedisClient.Get("USERINFO_" + views)
       assert.equal(data !== undefined, true)
       let user = JSON.parse(data)
       assert.equal(user["username"], views)

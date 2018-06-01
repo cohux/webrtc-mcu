@@ -5,7 +5,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 
 ## Version
 
-* 0.0.1 Nightly.
+* ``0.0.1 Nightly Build.``
 
 
 ## About
@@ -28,6 +28,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 * [Redis](https://redis.io/) **(>= 4.x)** Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
 * [Node.JS](https://nodejs.org) **(>= 10.x)** Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 * [PostgreSQL](https://www.postgresql.org/)  **(>= 10.x)** PostgreSQL is a powerful, open source object-relational database system with over 30 years of active development that has earned it a strong reputation for reliability.
+* [RabbitMQ](http://www.rabbitmq.com/) **(>= 3.7.x)** RabbitMQ is the most widely deployed open source message broker.
 
 #### NPM module dependencies
 
@@ -48,6 +49,7 @@ Create high-performance, reliable, and scalable real-time communication solution
 * [moment](https://github.com/moment/moment) Parse, validate, manipulate, and display dates in javascript.
 * [decimal.js](https://github.com/MikeMcl/decimal.js) An arbitrary-precision Decimal type for JavaScript.
 * [pg-promise](https://github.com/vitaly-t/pg-promise) Promises/A+ interface for PostgreSQL.
+* [chalk](https://github.com/chalk/chalk) Terminal string styling done right.
 
 
 ## Debug

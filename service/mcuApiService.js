@@ -72,7 +72,7 @@ class mcuApiService {
         assert.deepEqual(old !== null && old !== undefined, true, "认证失败")
         let session = await this.authNext(user, old)
         user.session = session
-        this.dbService.RedisClient.set("use-" + user.username, JSON.stringify(user))
+        this.dbService.RedisClient.set("APIUSERINFO_" + user.username, JSON.stringify(user))
         resolve(session)
       } catch (error) {
         console.log(error)

@@ -31,7 +31,7 @@
   * Module dependencies.
   */
 const assert = require("assert")
-const fs = require("fs")
+const fs = require("fs").promises
 const path = require("path")
 const os = require("os")
  
@@ -41,26 +41,16 @@ const os = require("os")
  * @private
  */
 class logService {
-  constructor (include, dbService, configure) {
+  constructor (include, dbService, configure, fsModels) {
     this.dbService = dbService
     this.configure = configure
     this.include = include
+    this.fsModels = fsModels
   }
-
-  /**
-   * 写入日志到文件
-   * @private
-   */
-  appFile (path, log) {
-    return new Promise(function (resolve, reject) {
-      fs.appendFile(path, log, function (error) {
-        error ? reject(error) : resolve()
-      })
-    })
-  }
+  
 
    /**
-     * 写入日志到数据库
+     * 写入日志
      * @private
      */
    async append (options) {
@@ -71,48 +61,43 @@ class logService {
        time = (new Date()).getTime()
      } = options
      try {
-       let dbLog = await this.dbService.MongoDBClient.log.insertOne({
-         type, event, message, time,
-         read: false
-       })
+       
+       /**
+         * 写入日志到数据库
+         * @private
+         */
+       let dbLog = await this.dbService.MongoDBClient.log.insertOne({ type, event, message, time, read: false })
        assert.deepEqual(dbLog.result.n, 1)
-       await this.appFile(this.configure.log.path, JSON.stringify({ type, event, message, time }) + os.EOL)
+       
+       /**
+         * 写入日志到文件系统
+         * @private
+         */
+       await this.fsModels.addendLog(this.configure.log.path, JSON.stringify({ type, event, message, time }) + os.EOL)
      } catch (error) {
-       throw error
+       return
      }
    }
+  
 
    /**
      * 绑定事件处理函数
      * @private
      */
    bind (modules) {
-     let inthis = this 
-     for (let v of modules) {
-       v.on("error", function (error) {
-         let {
-           message, stack, inprotype, event
-         } = error
-         inthis.append(inprotype === true ? {
-           type: "error",
-           event, message
-         } : {
-           type: "error",
-           event: message,
-           message: stack
-         })
+     modules.forEach(v => {
+       v.on("error", error => {
+         let { message, stack, inprotype, event } = error
+         this.append(inprotype === true ? { type: "error", event, message } : { type: "error", event: message, message: stack })
        })
        v.on("info", function (info) {
-         let {
-           event, message
-         } = info
-         inthis.append({
-           type: "info",
-           event, message
-         })
+         let { event, message } = info
+         this.append({ type: "info", event, message })
        })
-     }
+     })
    }
+  
+  
  }
  
  
